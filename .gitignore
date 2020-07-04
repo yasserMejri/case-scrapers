@@ -1,0 +1,28 @@
+# Distribution / packaging
+.Python
+*.pyc
+libraries/
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+.installed.cfg
+*.egg
+# Serverless directories
+.serverless
+#virtual env
+venv
+#local files on macs
+.DS_STORE
+base/constants.py

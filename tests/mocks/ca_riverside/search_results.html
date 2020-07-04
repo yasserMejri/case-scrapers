@@ -1,0 +1,1079 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<title>Name Search</title>
+	<style type="text/css">
+		.charges{ white-space: nowrap; }
+	</style>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#CC00CC" alink="#FF0000">
+	<table align="center" border="0" width="700">
+		<tr>
+			<td align="center">
+				<img src="../images/RPABanner.png" width="700" alt="">
+			</td>
+		</tr>
+	</table>
+	<form  name="frmSearchByName" id="frmSearchByName" action="CriminalSearchByNameDOB.asp" method="post">
+		<!--START DEV8402 GSK 12/20/2011-->
+		<input type="hidden" name="hidDOB"                 id="hidDOB"               value="19610123">
+		<!--END   DEV8402 GSK 12/20/2011-->
+		<input type="hidden" name="hidCourtCode"           id="hidCourtCode"         value="C">
+		<input type="hidden" name="hidCourtCodeNumber"     id="hidCourtCodeNumber"   value="0">
+		<input type="hidden" name="hidRivInd"              id="hidRivInd"            value="IND">
+		<input type="hidden" name="ShowMatches"            id="ShowMatches"          value="True">
+		<input type="hidden" name="hidRowIDList"           id="hidRowIDList"         value="">
+		<input type="hidden" name="ReturnToURL"            id="ReturnToURL"          value="http%3A%2F%2Fpublic%2Daccess%2Eriverside%2Ecourts%2Eca%2Egov%2FOpenAccess%2FCriminalSearchByNameDOB%2Easp%3FtxtLastName%3DWashington%26txtFirstName%3DJoyce%26txtMiddleName%3D%26ShowMatches%3DTrue%26MatchNumber%3D1%26optPerBusInd%3DPER%26hidRivInd%3DIND%26hidDOB%3D19610123">
+		<input type="hidden" name="MatchNumber"            id="MatchNumber"          value="1">
+		<!--DT6802 07/20/10 Start-->
+		<input type="hidden" name="hidPerBusInd"           id="hidPerBusInd"         value="PER">
+		<!--DT6802 07/20/10 Start-->
+		<!--START DEV6981 GSK 09/14/2010-->
+		<input type="hidden" name="hidNameSearchResults"   id="hidNameSearchResults" value="">
+		<input type="hidden" name="hidNameSearchMatches"   id="hidNameSearchMatches" value="">
+		<!--'START DEV6981 GSK 09/14/2010-->
+		<table align="center" width="700" style="border:2px solid black;">
+			<tr>
+				<td align="center">
+					<table border="0" align="center">
+						<tr style="height:40">
+							<td colspan="99" align="center">
+								<table border="0" align="center">
+									<tr>
+										<td colspan="3" align="center">
+											<font face="arial"><small><b><big><big>Name Search</big></big></b></small></font>
+	  									</td>
+									</tr>
+									<tr>
+										<td width="150">&nbsp;</td>
+										<td align="center" width="400">
+										
+											<font color="#FFFFFF">
+										
+											Case Views Remaining:&nbsp;
+											<span id='lblClicks'>
+												
+											</span>
+										
+											</font>
+										
+
+										</td>
+										<td width="150" align="right">&nbsp;</td>
+									</tr>
+									<tr style="height:10">
+										<td></td>
+									</tr>
+								</table>
+	  						</td>
+						</tr>
+
+						<!--END   DEV8437 GSK 01/03/2012-->
+
+						<tr style="height:30; display:none;">
+							<td align="center" colspan="99">
+				  				
+			<!--Include Court Code Select Starts Here -->
+			<input type="hidden" name="Typed" id="Typed">
+			<table border="0">
+			
+
+			<!--START DEV6943 GSK 08/23/2010-->
+			<!--####################################################################################-->
+
+							
+			<tr valign="top">
+				<td align="center" colspan="99">
+					<!-- DEV 11389 START 06/30/2016
+					<b><font color="#0000FF" face="arial">
+						Select either Riverside or Indio&nbsp;&nbsp;
+						<a href="javascript:ShowCountyHelp();">
+							<img src="../images/help.gif" height="16" border="0" alt="">
+						</a>
+					</font></b>
+					DEV 11389 END   06/30/2016 -->
+					<b><font color="#0000FF" face="arial">
+						Make Selection from Dropdown List:
+					</font></b>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" colspan="99">
+					<select id="dropCourtCode" name="dropCourtCode" onkeydown="KeyPress();" onmousedown="KeyPressEnabled = false;" onchange="SetRivInd(this.value);">
+					<!-- DEV 11389 START 06/30/2016
+					<option   value="RIV">Riverside - All Civil and Criminal Court Codes&nbsp;&nbsp;</option>
+					<option  selected  value="IND">Indio - All Civil and Criminal Court Codes&nbsp;&nbsp;</option>
+					DEV 11389 END   06/30/2016 -->
+					<!--option   value="RIV">Countywide Family Law and Riverside Civil/Small Claims &nbsp;&nbsp;</option-->
+					<option   value="RIV">Riverside Civil/Small Claims &nbsp;&nbsp;</option>
+					<option  selected  value="IND">Countywide Criminal and Indio Civil/Small Claims &nbsp;&nbsp;</option>
+					</select>
+				</td>
+			</tr>
+			
+			<!--END   DEV6943 GSK 08/23/2010-->
+			
+			<!--####################################################################################-->
+
+			
+			
+			<!--####################################################################################-->
+			
+			
+			
+			<!--####################################################################################-->
+			
+			</table>
+			<script type="text/javascript">
+			// This is a global value to determine which item to select
+			var selectedOption = 0;
+			var KeyPressEnabled = true;
+			var currentForm = document.forms[0];
+			var arrCourtCode = new Array();
+			var arrRivInd    = new Array();
+			
+arrCourtCode[0] = 'A';
+arrRivInd   [0] = 'RIV';
+arrCourtCode[1] = 'B';
+arrRivInd   [1] = 'IND';
+
+
+			function ShowCountyHelp()
+			{
+				window.open("../CountyHelp.html","","scrollbars=no,menubar=no,height=300,width=400,resizable=no,toolbar=no,location=no,status=no");
+			}
+			
+			function SetCookie(name,value,days)
+			{
+				var date = new Date();
+				date.setTime(date.getTime() + (days*24*60*60*1000));
+				var expires = ";expires="+date.toGMTString() +"; path=/";
+				var cookie = name+"="+value+ expires;
+				document.cookie = cookie;
+			}
+			function SetRivInd(ri)
+			{
+				ri = ri.toUpperCase();
+				riPrev = document.getElementById("hidRivInd").value;
+				document.getElementById("hidRivInd").value = ri;
+				for (var i=0 ; i<=arrRivInd.length ; i++)
+				{
+				
+					if (arrRivInd[i] == ri )
+				
+					{
+					
+						SetCookie("CivilRivInd",ri,1);
+						SetCookie("CivilCourtCode",arrCourtCode[i],1);
+						SetCookie("CivilCourtCodeNumber", i,1);
+						//START DEV6943 GSK 08/23/2010
+						document.getElementById("hidCourtCode").value = arrCourtCode[i];						
+						document.getElementById("hidCourtCodeNumber").value = i;
+						//END   DEV6943 GSK 08/23/2010
+					
+						break;
+					}
+				}
+				if (ri != riPrev){
+					divResults = document.getElementById("divNameSearchResults");
+					divMatches = document.getElementById("divNameSearchMatches");
+					if (divResults) divResults.innerHTML = "";
+					if (divMatches) divMatches.innerHTML = "";
+				}
+			}
+			
+			function SelectChange()
+			{
+				// We use this function to disable any dynamic selecting of the
+				// combo-box when the user uses the mouse to select items.
+				if (KeyPressEnabled)
+				{
+					currentForm.dropCourtCode.selectedIndex = selectedOption;
+				} else {
+					selectedOption = currentForm.dropCourtCode.selectedIndex;
+				}
+				document.getElementById("hidCourtCode").value = arrCourtCode[selectedOption];
+				document.getElementById("hidCourtCodeNumber").value = selectedOption;
+				document.getElementById("hidRivInd").value = arrRivInd[selectedOption];
+				
+				
+				SetCookie("CivilCourtCode", arrCourtCode[selectedOption],1);
+				SetCookie("CivilRivInd",    arrRivInd   [selectedOption],1);
+				SetCookie("CivilCourtCodeNumber",        selectedOption ,1);
+				
+				CourtCodeChanged();
+			}
+			function KeyPress()
+			{
+				KeyPressEnabled = true;
+				if (event.keyCode == 38) //Up arrow key
+				{
+					currentForm.Typed.value = "";
+					if ( currentForm.dropCourtCode.selectedIndex > 0 )
+					{
+						selectedOption = currentForm.dropCourtCode.selectedIndex - 1;
+					}
+					return;
+				}
+
+				if (event.keyCode == 40) //Down arrow key
+				{
+					currentForm.Typed.value = "";
+					if ( currentForm.dropCourtCode.selectedIndex < (currentForm.dropCourtCode.options.length - 1) )
+					{
+						selectedOption = currentForm.dropCourtCode.selectedIndex + 1;
+					}
+					return;
+				}
+
+				// Keycode 32 is a space
+				// Convert the ASCII keycode value to a character and add the key
+				// entered to a "buffer". Normally, this would be a hidden field.
+				currentForm.Typed.value = String.fromCharCode(event.keyCode).toLowerCase();
+
+				// Loop through the select list to find any matches
+				for (x = 0; x < currentForm.dropCourtCode.length; x++)
+				{
+					var OptionText = currentForm.dropCourtCode.options[x].text;
+					var tmpOptionText = "";
+
+					// Loop through the value of each select item, and if there is a
+					// match on what they have typed in, set the global variable for that value.
+					// The browser will run the onChange event since you typed a key. We'll
+					// run SelectChange() in the onChangeEvent just to be sure.
+					for (y = 0; y < OptionText.length; y ++)
+					{
+						tmpOptionText += OptionText.charAt(y).toLowerCase();
+						if (tmpOptionText == currentForm.Typed.value)
+						{
+							currentForm.dropCourtCode.selectedIndex = x;
+							selectedOption = x;
+							return;
+						}
+					}
+				}
+			}
+			</script>
+			<!--Include Court Code Select Ends Here -->
+
+	  						</td>
+						</tr>
+						<!--DT6802 07/20/10 Start-->
+						<tr style="height:30">
+							<td></td>
+						</tr>
+						<!--DT6802 07/20/10 End-->
+						<tr>
+							<td colspan="99">
+								<table border="0">
+
+									<tr>
+										<td width="125">&nbsp;</td>
+										<td width="20">&nbsp;</td>
+										<td width="180" align="center">
+											<font face="arial"><small><b>Last Name* </b></small></font>
+										</td>
+										<td width="150" align="center">
+											<font face="arial"><small><b>First Name*</b></small></font>
+										</td>
+										<td width="150" align="center">
+											<font face="arial"><small><b>Middle Name</b></small></font>
+										</td>
+										<td width="125">&nbsp;</td>
+									</tr>
+									<!--DT6802 07/20/10 Start-->
+									<tr>
+										<td width="125"></td>
+										<td width="125" style="display:none;">
+											<input type="radio" name="optPerBusInd" id="optPerBusIndPER" value="PER"  Checked  onclick="SetPerBusInd(this.value);">&nbsp;<font face="arial"><small><b>Individual</b></small></font>
+										</td>
+										<td width="20">&nbsp;</td>
+										<td width="160" align="center">
+											<!--DT6802 07/20/10 Start
+											<input type="text" name="txtLastName"   id="txtLastName"  onkeypress="KeyPressCheck();" value="Washington">-->
+											<input type="text" name="txtLastName"   id="txtLastName"  value="Washington" size="24">
+											<!--DT6802 07/20/10 End-->
+										</td>
+										<td width="160" align="center">
+											<!--DT6802 07/20/10 Start
+											<input type="text" name="txtFirstName"  id="txtFirstName"  onkeypress="KeyPressCheck();" value="Joyce"-->
+											<input type="text" name="txtFirstName"  id="txtFirstName"  value="Joyce">
+											<!--DT6802 07/20/10 End-->
+										</td>
+										<td width="160" align="center">
+											<!--DT6802 07/20/10 Start
+											<input type="text" name="txtMiddleName" id="txtMiddleName" onkeypress="KeyPressCheck();" value="">-->
+											<input type="text" name="txtMiddleName" id="txtMiddleName" value="">
+											<!--DT6802 07/20/10 End-->
+										</td>
+										<td width="125">&nbsp;</td>
+									</tr>
+									<!--DT6802 07/20/10 Start-->
+
+									<tr>
+										<td></td><td></td>
+										<td  colspan="3" align="center">
+											<div id="divDOB" style="display:block;">
+												<table>
+													<tr>
+														<td></td>
+														<td align="left"  ><font face="arial"><small><b>&nbsp;Month</b></small></font></td>
+														<td align="left"  ><font face="arial"><small><b>Day</b></small></font></td>
+														<td align="center"><font face="arial"><small><b>Year</b></small></font></td>
+													</tr>
+													<tr>
+														<td>
+															<font face="arial"><small><b>&nbsp;Date of Birth*:&nbsp;</b></small></font>
+														</td>
+														<td>
+															<select id="selMonth">
+																<option value=""  ></option>
+																<option value="01">&nbsp;January&nbsp;</option>
+																<option value="02">&nbsp;February&nbsp;</option>
+																<option value="03">&nbsp;March&nbsp;</option>
+																<option value="04">&nbsp;April&nbsp;</option>
+																<option value="05">&nbsp;May&nbsp;</option>
+																<option value="06">&nbsp;June&nbsp;</option>
+																<option value="07">&nbsp;July&nbsp;</option>
+																<option value="08">&nbsp;August&nbsp;</option>
+																<option value="09">&nbsp;September&nbsp;</option>
+																<option value="10">&nbsp;October&nbsp;</option>
+																<option value="11">&nbsp;November&nbsp;</option>
+																<option value="12">&nbsp;December&nbsp;</option>
+															</select>
+														</td>
+														<td>
+															<select id="selDay">
+																<option value=""></option>
+																<option value="01">&nbsp;01&nbsp;</option>
+																<option value="02">&nbsp;02&nbsp;</option>
+																<option value="03">&nbsp;03&nbsp;</option>
+																<option value="04">&nbsp;04&nbsp;</option>
+																<option value="05">&nbsp;05&nbsp;</option>
+																<option value="06">&nbsp;06&nbsp;</option>
+																<option value="07">&nbsp;07&nbsp;</option>
+																<option value="08">&nbsp;08&nbsp;</option>
+																<option value="09">&nbsp;09&nbsp;</option>
+																<option value="10">&nbsp;10&nbsp;</option>
+																<option value="11">&nbsp;11&nbsp;</option>
+																<option value="12">&nbsp;12&nbsp;</option>
+																<option value="13">&nbsp;13&nbsp;</option>
+																<option value="14">&nbsp;14&nbsp;</option>
+																<option value="15">&nbsp;15&nbsp;</option>
+																<option value="16">&nbsp;16&nbsp;</option>
+																<option value="17">&nbsp;17&nbsp;</option>
+																<option value="18">&nbsp;18&nbsp;</option>
+																<option value="19">&nbsp;19&nbsp;</option>
+																<option value="20">&nbsp;20&nbsp;</option>
+																<option value="21">&nbsp;21&nbsp;</option>
+																<option value="22">&nbsp;22&nbsp;</option>
+																<option value="23">&nbsp;23&nbsp;</option>
+																<option value="24">&nbsp;24&nbsp;</option>
+																<option value="25">&nbsp;25&nbsp;</option>
+																<option value="26">&nbsp;26&nbsp;</option>
+																<option value="27">&nbsp;27&nbsp;</option>
+																<option value="28">&nbsp;28&nbsp;</option>
+																<option value="29">&nbsp;29&nbsp;</option>
+																<option value="30">&nbsp;30&nbsp;</option>
+																<option value="31">&nbsp;31&nbsp;</option>
+															</select>
+														</td>
+														<td>
+															&nbsp;&nbsp;<input type="text" id="txtYear" size="3" maxlength="4">
+														</td>
+													</tr>
+												</table>
+											</div>
+										</td>
+									</tr>
+									<tr style="display: none;">
+										<td colspan="6" align="center">
+											<input type="button" id="btnAdvanced" value="Advanced Search for Criminal/Traffic only" onclick="AdvancedClick();">
+										</td>
+									</tr>
+
+									<tr>
+										<td>&nbsp;</td>
+									</tr>
+
+									<tr style="display: none;">
+										<td width="125">
+											<input type="radio" name="optPerBusInd" id="optPerBusIndBUS" value="BUS"   onclick="SetPerBusInd(this.value);">&nbsp;<font face="arial"><small><b>Business</b></small></font>
+										</td>
+										<td width="20">&nbsp;</td>
+										<td colspan="3" align="left">
+											<input type="text" size="80" style="background: #A1A1A1" name="txtBusinessName" id="txtBusinessName" value="" disabled>
+										</td>
+										<td width="125">&nbsp;</td>
+									</tr>
+									<!--DT6802 07/20/10 End-->
+									<tr style="height:10">
+										<td></td>
+									</tr>
+
+								</table>
+							</td>
+						</tr>
+
+						<tr align="center" style="height:20">
+							<td colspan="99">
+								<input type="button" name="btnSearch"   id="btnSearch"   value="Search"    style="width:100px" >
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="button" name="btnClear"    id="btnClear"    value="Clear"     style="width:100px" >
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="button" name="btnMainMenu" id="btnMainMenu" value="Main Menu" style="width:100px" >
+							</td>
+						</tr>
+
+						<!--START DEV6950 GSK 08/13/2010-->
+						<!--<tr><td>&nbsp;</td></tr>-->
+						<tr style="height:30" valign="bottom">
+							<td align="center" colspan="99">
+								<div id=divLoading></div>
+							</td>
+						</tr>
+						<!--ERND   DEV6950 GSK 08/13/2010-->
+
+						
+						<tr align="center" style="height:20">
+							<td colspan="99">
+								<!--START DEV6950 GSK 08/13/2010-->
+								<div id="divResultsButton">
+									<input type="button" name="Return"   id="Return"   value="Return to Results"    style="width:150px" onclick="ReturnToResults();">
+								</div>
+								<!--END   DEV6950 GSK 08/13/2010-->
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						</tr>
+						
+					</table>
+
+<div id='divNameSearchMatches'>
+<table border="1" style="bordercolorlight:#FFFFFF; bordercolordark:#000000;">
+  <tr align="left">
+    <td><font face="arial"><small><em>Case Number</em></small></font></td>
+    <td><font face="arial"><small><em>Name</em></small></font></td>
+    <td><font face="arial"><small><em>Filing Date</em></small></font></td>
+    <td><font face="arial"><small><em>Charges</em></small></font></td>
+    <td><font face="arial"><small><em>Next Hearing</em></small></font></td>
+    <td><font face="arial"><small><em>Jurisdiction</em></small></font></td>
+  </tr>
+  <tr align="left">
+    <td><div class='divrow2' id='divrow94947JW'><font color='#000000' face='arial'><small>94947JW</small></font>&nbsp;<input type='hidden' value='OTS,C,,94947JW,175830,1'></div></td>
+    <td nowrap><font color="#000000" face="arial"><small>WASHINGTON, JOYCE DEANNA&nbsp;&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small>09/07/2010&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small><span class="charges">VC&nbsp;22350</span><br><span class="charges">PC&nbsp;1214.1</span>&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small>None&nbsp;Scheduled&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small>SUPERIOR COURT - BANNING JUSTICE CENTER&nbsp;</small></font></td>
+  </tr>
+
+  <tr align="left">
+    <td><div class='divrow2' id='divrow90584JW'><font color='#000000' face='arial'><small>90584JW</small></font>&nbsp;<input type='hidden' value='OTS,C,,90584JW,175830,1'></div></td>
+    <td nowrap><font color="#000000" face="arial"><small>WASHINGTON, JOYCE DEANNA&nbsp;&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small>01/14/2010&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small><span class="charges">VC&nbsp;22350</span><br><span class="charges">PC&nbsp;1214.1(A)</span>&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small>None&nbsp;Scheduled&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small>SUPERIOR COURT - BANNING JUSTICE CENTER&nbsp;</small></font></td>
+  </tr>
+
+  <tr align="left">
+    <td><div class='divrow2' id='divrowICR18033'><font color='#000000' face='arial'><small>ICR18033</small></font>&nbsp;<input type='hidden' value='OTS,C,,ICR18033,2907048,1'></div></td>
+    <td nowrap><font color="#000000" face="arial"><small>WASHINGTON, JOYCE DEANNA&nbsp;&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small>11/09/1993&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small><span class="charges">HS&nbsp;11350</span><br><span class="charges">HS&nbsp;11364</span><br><span class="charges">VC&nbsp;14601.1</span><br><span class="charges">PC&nbsp;1214.1(A)</span>&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small>None&nbsp;Scheduled&nbsp;</small></font></td>
+    <td><font color="#000000" face="arial"><small>SUPERIOR COURT - BANNING JUSTICE CENTER&nbsp;</small></font></td>
+  </tr>
+
+</table>
+<br>
+</div>
+
+
+
+
+
+					</td>
+				</tr>
+			</table>
+		</form>
+<br>
+<center>
+	<small>
+		Riverside Public Access 5.7.27 © 2020 Journal Technologies, Inc.  All Rights Reserved. www.isd-corp.com
+		<br>
+		<font face="arial">
+		<!-- Dev11237 09/14/2016 TF -->
+			<a <a id="maillink" name="maillink" href="https://www.riverside.courts.ca.gov/Contact/contact.php"></a>
+			<span id="mailto"></span>
+		</font>
+	</small>
+</center>
+<!--START DEV9566 GSK 01/24/2013-->
+<script type="text/javascript">
+	function OpenEmail()
+	{
+		var maillink = document.getElementById("maillink");
+		maillink.click();
+
+		var URL = "http://public-access.riverside.courts.ca.gov/OpenAccess/";
+		URL += "ContactUs.asp";
+		var xmlhttp=new XMLHttpRequest();
+		xmlhttp.open('GET', URL, false);
+		xmlhttp.send();
+	}
+
+	var link = document.getElementById("mailto");
+	link.innerHTML = "<a href='javascript:OpenEmail();'>Contact Us</" + "a>";
+</script>
+
+<noscript>
+	<center>
+		<small>
+			<font face="arial">
+				<!-- Dev11237 09/14/2016 TF -->
+				<a href="https://www.riverside.courts.ca.gov/Contact/contact.php">Contact Us</a>
+			</font>
+		</small>
+	</center>
+</noscript>
+<!--END   DEV9566 GSK 01/24/2013-->
+
+<!-- load jQuery API from jQuery.com's CDN -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- fallback to local file -->
+<script> window.jQuery || document.write('<script src="jquery-1.9.0.min.js"><\/script>')</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		document.getElementById("divLoading").innerHTML = "";
+		onPageLoad();
+	});
+
+    $(".divrow").hover(function () {
+		this.style.cursor="pointer";
+	});
+
+    $(".divrow").click(function () {
+		//debug();
+		var val = this.lastChild.value;
+		if (val != undefined )
+		{
+			var token = val.split(',');
+			var CivOTS		= token[0];
+			var CourtCode	= token[1];
+			var CaseType	= token[2];
+			var CaseNumber  = token[3];
+			var DefNbr		= token[4];
+			var DefSeq		= token[5];
+			//OpenCase(CivOTS,CourtCode,CaseType,CaseNumber,DefNbr,DefSeq);
+		} else {
+			var row = this.id.substr(6);
+			fnShowMatches(row);
+		}
+    });
+
+    $("#btnSearch").bind('click', function() {
+        //debug();
+        //
+        DoSearch(false);
+        
+        //
+    });
+
+    $("#btnClear").bind('click', function() {
+		//debug();
+		ClearText();
+    });
+
+    $("#btnMainMenu").bind('click', function() {
+		//debug();
+		GoToMainMenu();
+    });
+
+
+    $("input").bind('keypress', function(event) {
+		if (this.type == "text")
+		{
+			if ( event.which==13)
+			{
+				DoSearch(false);
+			}
+		}
+    });
+
+</script>
+
+<script type="text/javascript" src="../cookies.js"></script>
+<script type="text/javascript" src="../debug.js"></script>
+
+<script type="text/javascript">
+//
+function promptForPurchase()
+{
+    var answer = confirm("You have no more Searches remaining!\nWould you like to purchase more Search Credits?");
+    if (answer)
+    {
+        GoToLogon();
+    }
+}
+//
+String.prototype.trim = function ()
+{
+    return this.replace(/^\s*/, "").replace(/\s*$/, "");
+}
+</script>
+
+<script type="text/javascript">
+function onPageLoad()
+{
+	//document.getElementById("txtLastName").focus();
+	//DT6892 07/20/10 Start
+
+	//START DEV6989 GSK 08/13/2010
+	//if (document.getElementById("txtBusinessName").value != "")
+	if ("PER" == "BUS" )
+	//END   DEV6989 GSK 08/13/2010
+	{
+		document.getElementById("txtLastName").disabled = true;
+		document.getElementById("txtFirstName").disabled = true;
+		document.getElementById("txtMiddleName").disabled = true;
+		document.getElementById("txtBusinessName").disabled = false;
+		document.getElementById("txtLastName").style.background = "#A1A1A1";
+		document.getElementById("txtFirstName").style.background = "#A1A1A1";
+		document.getElementById("txtMiddleName").style.background = "#A1A1A1";
+		document.getElementById("txtBusinessName").style.background = "#FFFFFF";
+		document.getElementById("txtBusinessName").focus();
+	}
+	else
+	{
+		document.getElementById("txtLastName").focus();
+	}
+	//DT6892 07/20/10 End
+
+	//START DEV8192 GSK 02/17/2012
+	document.getElementById("divLoading").innerHTML = "";
+	document.getElementById("btnSearch").disabled = false;
+	document.getElementById("btnClear").disabled = false;
+	//END   DEV8192 GSK 02/17/2012
+
+	debug();
+	ri = document.getElementById("hidRivInd").value;
+	SetRivInd(ri);
+
+	SetDOB("19610123");
+}
+</script>
+
+<script type="text/javascript">
+	function SetDOB(strDOB) {
+		if (strDOB) {
+			document.getElementById("selMonth").selectedIndex = parseInt(strDOB.substring(4, 6));
+			document.getElementById("selDay").selectedIndex = parseInt(strDOB.substring(6, 8));
+			document.getElementById("txtYear").value = strDOB.substring(0, 4);
+		}
+	}
+</script>
+
+<script type="text/javascript">
+function DoSearch(bFromShowMatches)
+{
+	var LastName     = document.getElementById("txtLastName").value;
+	var FirstName    = document.getElementById("txtFirstName").value;
+	var MiddleName   = document.getElementById("txtMiddleName").value;
+	//DT6892 07/20/10 Start
+	var BusinessName = document.getElementById("txtBusinessName").value;
+	var PerBusInd    = document.getElementById("hidPerBusInd").value;
+
+	//START DEV8402 GSK 12/20/2011
+	//debug();
+	var divDOB      = document.getElementById("divDOB");
+	var DOBActive    = true;// (divDOB.style.display == "block");
+	var DOBMonth     = document.getElementById("selMonth").value;
+	var DOBDay       = document.getElementById("selDay").value;
+	var DOBYear      = document.getElementById("txtYear").value;
+
+	//END   DEV8402 GSK 12/20/2011
+
+	if (PerBusInd == "PER")
+	{
+	//DT6892 07/20/10 End
+		if (LastName == "")
+		{
+			alert("Last Name cannot be blank!");
+			document.getElementById("txtLastName").focus();
+			return false;
+		}
+
+	//DT6892 07/20/10 End
+		if (FirstName == "")
+		{
+			alert("First Name cannot be blank!");
+			document.getElementById("txtFirstName").focus();
+			return false;
+		}
+
+	//START   DEV8402 GSK 12/20/2011
+		var DOB = "";
+		//if (DOBMonth == "" && DOBDay == "" && DOBYear == "" && DOBActive == true)
+		//{
+		//	DOBActive = false;
+		//}
+		if (DOBActive == true)
+		{	var Now = new Date();
+			//Is it Numeric?
+			if (isNaN(DOBYear))
+			{
+				alert("Invalid Date of Birth Year!");
+				document.getElementById("txtYear").select();
+				return false;
+			}
+			//Is it 4 digits?
+			if (DOBYear.length != 4 )
+			{
+				alert("Date of Birth Year must be 4 digits (YYYY)!");
+				document.getElementById("txtYear").select();
+				return false;
+			}
+			//Is it reasonable?
+			if (parseInt(DOBYear) < 1900 || parseInt(DOBYear) > Now.getFullYear() )
+			{
+				alert("Date of Birth Year is out of range!");
+				document.getElementById("txtYear").select();
+				return false;
+			}
+
+			if (DOBMonth == "")
+			{
+				alert("Date of Birth Month cannot be blank!");
+				document.getElementById("selMonth").focus();
+				return false;
+			}
+			if (DOBDay == "")
+			{
+				alert("Date of Birth Day cannot be blank!");
+				document.getElementById("selDay").focus();
+				return false;
+			}
+
+			if (DOBMonth == "04" || DOBMonth == "06" || DOBMonth == "09" || DOBMonth == "11")
+			{
+				if (DOBDay == "31")
+				{
+					alert("Invalid Date of Birth!");
+					document.getElementById("selDay").focus();
+					return false;
+				}
+			}
+			if (DOBMonth == "02")
+			{
+				var leapYear = parseInt(DOBYear) % 4;
+				if (DOBDay == "31" || DOBDay == "30" || (  DOBDay == "29" &&  leapYear != 0 ))
+				{
+					alert("Invalid Date of Birth!");
+					document.getElementById("selDay").focus();
+					return false;
+				}
+			}
+
+			DOB = DOBYear + DOBMonth + DOBDay;
+		} else {
+			DOB = "";
+		}
+		if (bFromShowMatches == false)
+		{
+			var hidDOB = document.getElementById("hidDOB");
+			hidDOB.value = DOB;
+		}
+	//END   DEV8402 GSK 12/20/2011
+
+	//DT6892 07/20/10 Start
+	}
+
+	if (PerBusInd == "BUS")
+	{
+		//START DEV6989 GSK 08/13/2010
+		//document.getElementById("txtBusinessName").disabled = false;
+		if (BusinessName == "")
+		{
+			alert("Business Name cannot be blank!");
+			document.getElementById("txtBusinessName").focus();
+			return false;
+		}
+		//END   DEV6989 GSK 08/13/2010
+	}
+	//DT6892 07/20/10 End
+
+	if (bFromShowMatches == false)
+	{
+		document.getElementById("ShowMatches").value = "";
+		document.getElementById("MatchNumber").value = "";
+	}
+
+	//START DEV6950 GSK 08/13/2010
+	if (document.getElementsByName("divResultsButton").length >= 1)
+		document.getElementById("divResultsButton").innerHTML = "";
+
+	if (document.getElementsByName("divNameSearchMatches").length >= 1)
+		document.getElementById("divNameSearchMatches").innerHTML = "";
+
+	if (document.getElementsByName("divNoNames").length >= 1)
+		document.getElementById("divNoNames").innerHTML = "";
+
+	if (bFromShowMatches == false)
+	{
+		if (document.getElementsByName("divNameSearchResults").length >= 1)
+			document.getElementById("divNameSearchResults").innerHTML = "";
+	}
+
+	//DEV6950 GSK 09/03/2010 - Move Form Submit Up so progress bar updates come AFTER
+	//debug();
+	document.forms[0].submit();
+
+	document.getElementById("btnSearch").disabled = true;
+	//START DEV6989 GSK 08/13/2010
+	document.getElementById("btnClear").disabled = true;
+	//END   DEV6989 GSK 08/13/2010
+
+	var msg = "<small>";
+	msg += "<b>";
+	msg += "<font color='red' face='arial'>";
+
+	if (bFromShowMatches == true)
+		msg += "Retrieving Matches:&nbsp;";
+	else
+		msg += "Searching:&nbsp;";
+
+	msg += "<img src='../images/loading.gif' height='10' alt=''>"
+	msg += "</" + "font>";
+	msg += "</" + "b>";
+	msg += "</" + "small>";
+
+	document.getElementById("divLoading").innerHTML = msg;
+	//END   DEV6950 GSK 08/13/2010
+}
+</script>
+
+<script type="text/javascript">
+function AdvancedClick()
+{
+	//debug();
+	var adv = document.getElementById("btnAdvanced");
+	var advText = adv.value.toLowerCase();
+	if (advText.indexOf("remove") == -1)
+	{
+		adv.value = "Remove Advanced Search";
+		//Show the DOB fields
+		document.getElementById("divDOB").style.display = "block";
+		document.getElementById("selMonth").focus();
+
+	} else {
+		//START DEV8437 GSK 01/03/2012
+		//adv.value = "Advanced Search";
+		adv.value = "Advanced Search for Criminal/Traffic only";
+		//END   DEV8437 GSK 01/03/2012
+		//Hide the DOB fields
+
+		document.getElementById("selMonth").selectedIndex = 0;
+		document.getElementById("selDay").selectedIndex = 0;
+		document.getElementById("txtYear").value = "";
+
+		document.getElementById("divDOB").style.display = "none";
+	}
+}
+
+function GoToLogon()
+{
+	window.open("@Logon.asp", "_self");
+}
+
+function GoToAlerts()
+{
+	debug();
+	var w = window.open("SubscriptionAcctMgmtProxy.asp", "SubscriptionAccountManagement");
+	w.focus();
+}
+
+function ReturnToResults()
+{
+	document.getElementById("ShowMatches").value = "RETURN";
+	document.getElementById("MatchNumber").value = "";
+	DoSearch(true);
+}
+
+//START DEV6981 GSK 09/14/2010
+//function ShowMatches(RowIDListIndex)
+function fnShowMatches(RowIDListIndex)
+//END   DEV6981 GSK 09/14/2010
+{
+	document.getElementById("ShowMatches").value  = "TRUE";
+	document.getElementById("MatchNumber").value  = RowIDListIndex;
+	document.getElementById("hidRowIDList").value = arrRowIDList[RowIDListIndex];
+
+	//START DEV6981 GSK 09/14/2010
+	var s = "divrow" + RowIDListIndex;
+	var divrow = document.getElementById(s);
+	if (divrow != null)
+	{
+		s = divrow.innerHTML;
+		s = s.replace(/#0000FF/i, "#CC00CC");
+		divrow.innerHTML = s;
+	}
+  //START DEV8192 GSK 02/16/2012
+  //document.getElementById("hidNameSearchResults").value = document.getElementById("divNameSearchResults").outerHTML;
+	document.getElementById("hidNameSearchResults").value = "<div id='divNameSearchResults'>" + document.getElementById("divNameSearchResults").innerHTML + "</" + "div>";
+  //END   DEV8192 GSK 02/16/2012
+
+	//END   DEV6981 GSK 09/14/2010
+
+	DoSearch(true);
+}
+
+function CourtCodeChanged()
+{
+	//This function intentionally left blank
+}
+function ClearText()
+{
+	document.getElementById("txtLastName").value = "";
+	document.getElementById("txtFirstName").value = "";
+	document.getElementById("txtMiddleName").value = "";
+	document.getElementById("txtBusinessName").value = "";
+	document.getElementById("ShowMatches").value   = "";
+	document.getElementById("MatchNumber").value   = "";
+	document.getElementById("MatchNumber").value   = "";
+
+	document.getElementById("selMonth").selectedIndex = 0;
+	document.getElementById("selDay").selectedIndex = 0;
+	document.getElementById("txtYear").value = "";
+
+	document.getElementById("hidDOB").value = "";
+
+
+	//START DEV6989 GSK 08/13/2010
+	//DT6892 07/20/10 Start
+	//document.getElementById("hidPerBusInd").value   = "PER";
+	//document.getElementById("optPerBusInd").value   = document.getElementById("hidPerBusInd").value;
+	//DT6892 07/20/10 End
+	//END   DEV6989 GSK 08/13/2010
+
+	document.forms[0].submit();
+}
+
+function GoToMainMenu()
+{
+	window.open("../CriminalMainMenu.asp", "_self");
+}
+function IsNumeric(sText)
+{
+	var ValidChars = "0123456789";
+	var IsNumber=true;
+	var letter;
+	for (i = 0; i < sText.length && IsNumber == true; i++)
+	{
+		letter = sText.charAt(i);
+		if (ValidChars.indexOf(letter) == -1)
+		{
+			IsNumber = false;
+		}
+	}
+	return IsNumber;
+}
+
+function OpenCase(CivOTS,CourtCode,CaseType,CaseNumber,DefNbr,DefSeq)
+{
+	var URL = "";
+	var s = "divrow"; 		//START DEV6981 GSK 09/14/2010
+
+	if (CivOTS=="OTS")
+	{
+		URL  = "?Type=OTS";
+		URL += "&CourtCode="  + CourtCode;
+		URL += "&CaseNumber=" + CaseNumber;
+		URL += "&DefNbr="     + DefNbr;
+		URL += "&DefSeq="     + DefSeq;
+		URL += "&otnmseq=0";
+		s += CaseNumber;	//START DEV6981 GSK 09/14/2010
+	} else {
+		URL  = "?Type=CIV";
+		URL += "&CourtCode="  + CourtCode;
+		URL += "&CaseType="   + CaseType;
+		URL += "&CaseNumber=" + CaseNumber;
+		s += CaseType + CaseNumber;	//START DEV6981 GSK 09/14/2010
+	}
+
+	URL = "../@CaseHistory.asp" + URL;
+
+	//START DEV7056 GSK 08/25/2010
+	URL += "&RivInd=" + document.getElementById("hidRivInd").value;
+	//END   DEV7056 GSK 08/25/2010
+
+	//START DEV6981 GSK 09/14/2010
+	var divrow = document.getElementById(s);
+	s = divrow.innerHTML;
+	s = s.replace(/#0000FF/i, "#CC00CC");
+	divrow.innerHTML = s;
+
+  //START DEV8192 GSK 02/16/2012
+  //document.getElementById("hidNameSearchMatches").value = document.getElementById("divNameSearchMatches").outerHTML;
+	document.getElementById("hidNameSearchMatches").value = document.getElementById("divNameSearchMatches").innerHTML;
+  //START DEV8192 GSK 02/16/2012
+
+	//END   DEV6981 GSK 09/14/2010
+
+	var w = self.screen.width -30;
+	var h = self.screen.height-150;
+	var options = "";
+	options += "left=10,top=10,screenX=10,screenY=10,";
+	options += "toolbar=no,location=yes,directories=no,status=yes,menubar=no,scrollbars=yes,copyhistory=no,resizable=yes";
+	var ViewCaseWindow = window.open(URL,"ViewCaseWindow",options);
+	ViewCaseWindow.focus();
+}
+
+
+//DT6892 07/20/10 Start
+function SetPerBusInd(pbi)
+{
+	pbi = pbi.toUpperCase();
+	document.getElementById("hidPerBusInd").value = pbi;
+	if (pbi == "BUS")
+	{
+		document.getElementById("txtLastName").disabled = true;
+		document.getElementById("txtFirstName").disabled = true;
+		document.getElementById("txtMiddleName").disabled = true;
+		document.getElementById("btnAdvanced").disabled = true;
+		document.getElementById("divDOB").disabled = true;
+
+		document.getElementById("txtBusinessName").disabled = false;
+		document.getElementById("txtLastName").style.background = "#A1A1A1";
+		document.getElementById("txtFirstName").style.background = "#A1A1A1";
+		document.getElementById("txtMiddleName").style.background = "#A1A1A1";
+		document.getElementById("txtBusinessName").style.background = "#FFFFFF";
+		document.getElementById("txtBusinessName").focus();
+	}
+	else
+	{
+		document.getElementById("txtLastName").disabled = false;
+		document.getElementById("txtFirstName").disabled = false;
+		document.getElementById("txtMiddleName").disabled = false;
+		document.getElementById("btnAdvanced").disabled = false;
+		document.getElementById("divDOB").disabled = false;
+
+		document.getElementById("txtBusinessName").disabled = true;
+		document.getElementById("txtLastName").style.background = "#FFFFFF";
+		document.getElementById("txtFirstName").style.background = "#FFFFFF";
+		document.getElementById("txtMiddleName").style.background = "#FFFFFF";
+		document.getElementById("txtBusinessName").style.background = "#A1A1A1";
+		document.getElementById("txtLastName").focus();
+	}
+}
+//DT6892 07/20/10 End
+
+</script>
+
+	</body>
+</html>
+<!--END   DEV6950 GSK 08/13/2010-->

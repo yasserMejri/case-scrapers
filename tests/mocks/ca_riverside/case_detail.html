@@ -1,0 +1,1068 @@
+
+
+<form name="frmShowDocument" id="frmShowDocument" action="" method="POST">
+	<input type="hidden" name="returnpage"    id="returnpage"    value="" >
+	<input type="hidden" name="imagekey"      id="imagekey"      value="" >
+	<input type="hidden" name="CaseType"      id="CaseType"      value="" >
+	<input type="hidden" name="CaseNumber"    id="CaseNumber"    value="" >
+	<input type="hidden" name="CaseName"      id="CaseName"      value="" >
+	<input type="hidden" name="ActionDate"    id="ActionDate"    value="" >
+	<input type="hidden" name="ActionDesc"    id="ActionDesc"    value="" >
+	<input type="hidden" name="ID"            id="ID"            value="" >
+	<input type="hidden" name="apiToken"      id="apiToken"      value="" >
+	<input type="hidden" name="productType"   id="productType"   value="" >
+	<input type="hidden" name="pageCount"     id="pageCount"     value="" >
+	<input type="hidden" name="key"           id="key"           value="" >
+	<input type="hidden" name="firstpageonly" id="firstpageonly" value="" >
+</form>
+
+<script type="text/javascript" src="../json.js"></script>
+
+<script type="text/javascript">
+//START DEV8957 GSK 01/24/2013
+function ShowImage(imagekey, firstpageonly)
+{
+	debug();
+	var loc = window.location.pathname.toLowerCase();
+	var UserName   = "";
+	var secLevel   = "0";
+	if (loc.indexOf('/civil/') >= 0)
+	{
+		UserName = GetSessionVariable("CivilUserName").toUpperCase();
+		secLevel = GetSessionVariable("CivilFieldSecurity");
+	}
+	else
+	{
+		UserName = GetSessionVariable("CriminalUserName").toUpperCase();
+		secLevel = GetSessionVariable("CriminalFieldSecurity");
+	}
+
+	var ImageKeyJSON = GetSessionVariable("ImageKeyJSON" + imagekey);
+	if (ImageKeyJSON == "")
+	{
+		//Do something, the session probably expired
+		alert("Your session has expired.\nThis document request cannot be completed.")
+		window.close();
+		return;
+	}
+
+	var docData = JSON.parse(ImageKeyJSON);
+
+	var key = docData.key;
+	var pageCount;
+
+	if (key == undefined) key = "";
+
+	if (key == "")
+	{
+
+		CreateXMLHttpRequest();
+		debug();
+		xmlHttp.open('GET', "../DocumentAPIProxy.asp?productType=DOC&JSON="+encodeURIComponent(ImageKeyJSON), false);
+		xmlHttp.send();
+
+		var docGuid = "";
+		debug();
+		var rc = xmlHttp.status;
+		if (rc == 200)
+		{
+			docGuid = xmlHttp.responseText;
+			var guidData = JSON.parse(docGuid);
+
+			docData.key = guidData.key;
+			docData.PageCount = guidData.PageCount;
+
+			var stringify = JSON.stringify(docData);
+
+			SaveSessionVariable("ImageKeyJSON" + imagekey, stringify);
+		}
+		else
+		{
+			return false;
+		}
+	}
+	key       = docData.key;
+	pageCount = docData.PageCount;
+
+/////////////////////////////////////////////////////////
+//////////FOR TESTING ONLY //////////////////////////////
+if (pageCount == "0") pageCount = "1";
+//////////FOR TESTING ONLY //////////////////////////////
+/////////////////////////////////////////////////////////
+
+	var DocProcessing = "3RDAPI";
+	if (DocProcessing == "") DocProcessing = "3RD";
+
+	var OKtoShowDocument = false;
+
+	var DisplayDateTime = docData.ActionDateTime;
+	var DisplayAction   = docData.ActionDesc;
+	var CaseType = "";
+	var CaseNumber = "";
+	var CaseName = ""
+
+	if (docData.SystemCode == "CIV")
+	{
+		CaseType   = docData.CaseType;
+		CaseNumber = docData.CaseNumber;
+		CaseName   = GetSessionVariable(CaseType + CaseNumber);
+	} else {
+		CaseNumber = docData.CaseNumber;
+	}
+
+	var userID = GetSessionVariable("JaguarUserID");
+
+	var frm = document.getElementById("frmShowDocument");
+
+	frm.elements["CaseType"  ].value = CaseType;
+	frm.elements["CaseNumber"].value = CaseNumber;
+	frm.elements["CaseName"  ].value = CaseName;
+	frm.elements["ActionDate"].value = DisplayDateTime;
+	frm.elements["ActionDesc"].value = DisplayAction;
+	frm.elements["ID"        ].value = userID;
+
+	if (firstpageonly == true)
+	{
+		OKtoShowDocument = true;
+	}
+	else
+	{
+		if (DocProcessing == "FREE" || secLevel == "999" )
+		{
+			OKtoShowDocument = true;
+		}
+		else
+		{
+			if (DocProcessing == "3RD" /*&& UserName == "GUEST"*/ )
+			{
+				frm.action = "https://ecomm1.riverside.courts.ca.gov/";
+				frm.elements["imagekey"   ].value = imagekey;
+				frm.elements["key"        ].value = "";
+				frm.elements["productType"].value = "";
+				frm.submit();
+				OKtoShowDocument = false;
+			}
+
+			if (DocProcessing == "3RDAPI" /*&& UserName == "GUEST"*/ )
+			{
+				frm.elements["apiToken"   ].value = "d0380c63-e5ad-489f-b952-976db7e397dc";
+				frm.elements["key"        ].value = key;
+				frm.elements["productType"].value = "DOC";
+				frm.elements["pageCount"  ].value = pageCount;
+				frm.elements["imagekey"   ].value = imagekey;
+
+				CreateXMLHttpRequest();
+
+				var jsoninfo =  '{"apiToken":"d0380c63-e5ad-489f-b952-976db7e397dc", ' +
+								' "ID":"' + userID + '", ' +
+								' "productType":"DOC", ' +
+								' "key":"' + key + '" } ';
+
+				xmlHttp.open('GET', "../CheckUserCartAPIProxy.asp?JSON="+jsoninfo, false);
+				xmlHttp.send();
+				rc = xmlHttp.status;
+
+				if (rc == 200)
+				{
+					try
+					{
+						jsoninfo = xmlHttp.responseText;
+						var response = eval( '(' + jsoninfo + ')');
+						rc = response.returnCode;
+					}
+					catch(err)
+					{
+						rc=-1
+					}
+					debug();
+					frm.action = "https://ecomm1.riverside.courts.ca.gov/AddToUserCart.cfm";
+					if (rc == -1) //There was an error
+					{
+						alert("An error occured while processing your Document request.");
+					}
+
+					if (rc == 0) //Is NOT in user's cart
+					{
+						frm.submit();
+					}
+					if (rc == 1) //It IS in user's cart but it is NOT Paid for
+					{
+						var msg = "This Document is already in your cart but you cannot view until it has been paid for.\n" +
+								  "If you click OK you will be tranferred to your shopping cart so you can pay for your Document(s)\n" +
+								  "or you may click Cancel to continue viewing the Case Report.";
+						var answer = confirm(msg);
+						if (answer == true)
+						{
+							frm.submit();
+						}
+					}
+					if (rc == 2) //It IS in user's cart AND it IS Paid for
+					{
+						OKtoShowDocument = true;
+					}
+				}
+				else
+				{
+					debug();
+					var w = window.open("","");
+					w.document.write(xmlHttp.responseText);
+				}
+			}
+		}
+	}
+
+	if (OKtoShowDocument == true)
+	{
+		frm.action = "../DocumentManager.asp";
+		frm.method = "POST";
+		frm.target = "_blank";
+		frm.elements["productType"].value = "DOC";
+		frm.elements["key"].value = key;
+		frm.elements["firstpageonly"].value = firstpageonly;
+		debug();
+		frm.submit();
+	}
+
+	//window.open("http:///efiling/mainpage.asp?ImgKey=" + imagekey,"imagewindow","height=" + (window.screen.availHeight - 95) + ",width=" + (window.screen.availWidth - 10) + ", location=no, menubar=no, status=no, toolbar=no, scrollbars=yes, resizable=yes, fullscreen=no, top=0, left=0");
+}
+</script>
+
+<html>
+<head>
+<STYLE TYPE="text/css">
+	.charges{ white-space: nowrap; }
+</STYLE>
+<title>94947JW Case Report - Countywide Criminal & Traffic</title>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#CC00CC" alink="#FF0000">
+<script language="javascript" src="../debug.js"></script>
+<script language="javascript" src="../savesessionvariable.js"></script>
+<script language="javascript" src="../subscriptionaddremove.js"></script>
+<span id='spanCriminalCaseReport'>
+<form id='frmCriminalCaseReport' name='frmCriminalCaseReport' action='CriminalCaseReport.asp?" & Request.QueryString & "' method='POST'>
+<input type='hidden' id='hidHTML' name='hidHTML' value=''>
+</form>
+<table align=center width=700 border=0>
+	<tr>
+		<td align=center>
+			<img src = '../images/RPABanner.png' width=700>
+		</td>
+	</tr>
+	<tr>
+		<td align=center>
+			<font face="arial"><small><b>
+			<big><big><big>Criminal Case Report</big></big></big>
+			</b></small></font>
+		</td>
+	</tr>
+
+	<tr height=40>
+		<td align=center>
+			<b><font color="#0000FF" face="arial">
+			<a href='https://www1.epay-it.com/riv/' target='epayitwindow'>Pay Ticket / Case Fine</a>
+			</font></b>
+		</td>
+	</tr>
+
+	<tr height=40>
+		<input type=hidden id="linkAction" value=''>
+		<input type=hidden id="txtRemove" value='Remove this case from my notification list (click here)'>
+		<input type=hidden id="txtAdd" value='Send me an email when this case is updated (click here)'>
+		<td align=center id="tdSubscribeLink">
+			<a href="javascript:AddRemoveCaseNotification();" name="hrefLinkText" id="hrefLinkText"></a>&nbsp;
+			<a href="javascript:AddRemoveCaseNotification();"><img src="../images/emailalerticon.gif" height="24" border="0"></a>
+		</td>
+	</tr>
+	
+	</table>
+
+	<!--START DEV6950 GSK 08/13/2010-->
+	<center><span id=spanLoading><small><B><font color=red face=arial>Loading:&nbsp;<img src="../images/loading.gif" height=10/></font></span></center>
+	<!--END   DEV6950 GSK 08/13/2010-->
+	
+	<table align=center width=700 style="border:2px solid black">
+		<!--START DEV6942 GSK 08/05/2010-->
+		<tr height=20><td/></tr>
+		<tr>
+			<td colspan=99 align=center>
+				<input type="button" name="Print" id="Print" value="Print This Report" style="width: 180px" onclick="javascript:window.print();">
+			</td>
+		</tr>
+
+		
+
+		<tr>
+			<td colspan=99 align=center>
+				<input type="button" name="Documents" id="Documents" value="Purchase Documents for this Case" style="width: 250px" onclick="javascript:PurchaseDocuments();">
+			</td>
+		</tr>
+
+
+		
+		<tr>
+			<td colspan=99 align=center>
+				<input type="button" name="Close" id="Close" value="Close This Window" style="width: 180px" onclick="javascript:window.close();">
+			</td>
+		</tr>
+		<!--END   DEV6942 GSK 08/05/2010-->
+	<tr><td align=center>
+
+
+
+
+<br>
+<b><font color="#0000FF" face="arial">
+Case 94947JW - Defendants
+</font></b>
+<br>
+<br>
+
+<table border="1" style="bordercolorlight:#FFFFFF; bordercolordark:#000000;">
+  <tr>
+    <td valign='top'><font face="arial"><small><em>Seq
+    <td valign='top'><font face="arial"><small><em>Defendant
+    <td valign='top'><font face="arial"><small><em>Next Court Date
+    <td valign='top'><font face="arial"><small><em>Status
+    <td valign='top'><font face="arial"><small><em>Agency /<br/>DR Number
+    <td valign='top'><font face="arial"><small><em>Arrest Date
+    <td valign='top'><font face="arial"><small><em>Count 1 Charge
+    <td valign='top'><font face="arial"><small><em>Violation Date
+  </tr>
+
+		<tr>
+			<td><font color="#000000" face="arial"><small>1&nbsp;
+			<td><font color="#000000" face="arial"><small>WASHINGTON, JOYCE DEANNA&nbsp;
+			<td><font color="#000000" face="arial"><small> &nbsp;
+			<td><font color="#000000" face="arial"><small> &nbsp;
+			<td><font color="#000000" face="arial"><small>&nbsp;
+			<td><font color="#000000" face="arial"><small>N/A&nbsp;
+			<td><font color="#000000" face="arial"><small>VC 22350&nbsp;
+			<td><font color="#000000" face="arial"><small>09/01/2010&nbsp;
+		</tr>
+		
+</table>
+
+<br>
+<br>
+<b><font color="#0000FF" face="arial">
+Case 94947JW - WASHINGTON, JOYCE DEANNA - Status 
+</font></b>
+
+<br>
+<br>
+<table border="0">  <tr><td><font face="arial"><small><em>&nbsp;</td><td><font color="#000000" face="arial"><small>&nbsp;</td>
+    <td width=100></td>
+    <td><font face="arial"><small><em>Custody</td>
+    <td><b><font color="#000000" face="arial"><small>Citation</td>
+  </tr>
+  <tr>
+    <td><font face="arial"><small><em>Filing Type</td>
+    <td><b><font color="#000000" face="arial"><small>Citation</td>
+    <td>
+    <td><font face="arial"><small><em>Filing Date</td>
+    <td><b><font color="#000000" face="arial"><small>09/07/2010</td>
+  </tr>
+  <tr>
+    <td><font face="arial"><small><em>Ordered Bail</td>
+    <td><b><font color="#000000" face="arial"><small>$0.00</td>
+    <td></td>
+    <td><font face="arial"><small><em>Posted Bail</td>
+    <td><b><font color="#000000" face="arial"><small>$0.00</td>
+  </tr>
+  <tr>
+    <td><font face="arial"><small><em>D.A.</td>
+    <td colspan=2><b><font color="#000000" face="arial"><small></td>
+    <td><font face="arial"><small><em>Defense</td>
+    <td><b><font color="#000000" face="arial"><small></td>
+  </tr>
+  <tr>
+    <td valign="TOP"><font face="arial"><small><em>Next Action:</td>
+    <td valign="TOP" colspan=2><b><font color="#000000" face="arial"><small> </td>
+    <td valign="TOP"><font face="arial"><small><em>Deputy Report #:</td>
+    <td valign="TOP"><b><font color="#000000" face="arial"><small>BAPD </td>
+  </tr>
+</table>
+
+<br>
+
+<table border="1" style="bordercolorlight:#FFFFFF; bordercolordark:#000000;">
+  <tr>
+    <td><font face="arial"><small><em><b>Warrant</td>
+    <td><font face="arial"><small><em>Type</td>
+    <td><font face="arial"><small><em>Status</td>
+    <td><font face="arial"><small><em>Issued</td>
+    <td><font face="arial"><small><em>Affidavit</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><font color="#000000" face="arial"><small><b>&nbsp;</td>
+    <td><font color="#000000" face="arial"><small><b>NONE&nbsp;</td>
+    <td><font color="#000000" face="arial"><small><b>03/10/2011&nbsp</td>
+    <td><font color="#000000" face="arial"><small><b>N/A&nbsp;</td>
+  </tr>
+  <tr>
+    <td><font face="arial"><small><em><b>Probation</td>
+    <td colspan="2"><font face="arial"><small><em>Type</td>
+    <td><font face="arial"><small><em>Granted</td>
+    <td><font face="arial"><small><em>Expiration</td>
+  </tr>
+  <tr>
+    <td><font color="#000000" face="arial"><small><b>&nbsp;</td>
+    <td colspan="2"><font color="#000000" face="arial"><small><b>N/A</td>
+    <td><font color="#000000" face="arial"><small><b>N/A</td>
+    <td><font color="#000000" face="arial"><small><b>N/A</td>
+  </tr>
+  <tr>
+    <td><font face="arial"><small><em><b>Sentence</td>
+    <td colspan="2"><font face="arial"><small><em>Convicted Date</td>
+    <td><font face="arial"><small><em>Fine and Penalty</td>
+    <td nowrap><font face="arial"><small><em>Restitution Fine</td>
+  </tr>
+  <tr>
+    <td><font face="arial"><small><em>&nbsp;</td>
+    <td colspan="2"><font color="#000000" face="arial"><small><b>N/A&nbsp;</td>
+    <td><font color="#000000" face="arial"><small><b>&nbsp;</td>
+    <td><font color="#000000" face="arial"><small><b>0&nbsp;</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<b><font color="#0000FF" face="arial">Case 94947JW - WASHINGTON, JOYCE DEANNA - Charges 
+</font></b>
+<br>
+<br>
+
+
+<table border="1" style="bordercolorlight:#FFFFFF; bordercolordark:#000000;"><tr><td colspan="7"><font color="#000000" face="arial"><small><b>Filed Charges</td></tr>  <tr>
+    <td><font face="arial"><small><em>Count</td>
+    <td><font face="arial"><small><em>Charge</td>
+    <td><font face="arial"><small><em>Severity</td>
+    <td><font face="arial"><small><em>Description</td>
+    <td><font face="arial"><small><em>Violation Date</td>
+    <td><font face="arial"><small><em>Plea</td>
+    <td><font face="arial"><small><em>Status</td>
+  <tr>
+<tr><td><font color="#000000" face="arial"><small>1&nbsp;</td><td><font color="#000000" face="arial"><small>VC 22350&nbsp;</td><td><font color="#000000" face="arial"><small>I&nbsp;</td><td><font color="#000000" face="arial"><small>Unsafe Speed&nbsp;</td><td><font color="#000000" face="arial"><small>09/01/2010&nbsp;</td><td><font color="#000000" face="arial"><small>&nbsp;</td><td><font color="#000000" face="arial"><small>ACTIVE&nbsp;</td></tr>
+
+</table>
+<br>
+<br>
+
+<b><font color="#0000FF" face="arial">Case 94947JW - WASHINGTON, JOYCE DEANNA - Probation
+</font></b>
+<br>
+<br>
+<b><font color="#0000FF" face="arial">Probation Has Not Been Granted On This Case For This Defendant.</font></b><br>
+<br>
+<br>
+<b><font color="#0000FF" face="arial">Case 94947JW - WASHINGTON, JOYCE DEANNA - Related Cases On Calendar
+</font></b>
+<br>
+<br>
+
+<table border="1" style="bordercolorlight:#FFFFFF; bordercolordark:#000000;"><tr>  <td colspan="3" align="center"><font color="#000000" face="arial"><small><b>Related Cases On Calendar</b></td></tr><tr>  <td colspan="3" align="center"><font color="#000000" face="arial"><small><i>This Defendant Does Not Have Any Other Cases With Future Hearings Scheduled.</i></td></tr></table>
+<br>
+<br>
+<b><font color="#0000FF" face="arial">Case 94947JW - WASHINGTON, JOYCE DEANNA - All of Defendant's Other Cases
+</font></b>
+<br>
+<br>
+<table border="1" style="bordercolorlight:#FFFFFF; bordercolordark:#000000;">
+	<tr>
+		<td><font face="arial"><small><em>Case Number
+		<td><font face="arial"><small><em>Filed Date
+		<td><font face="arial"><small><em>Charges</td>
+		<td><font face="arial"><small><em>Next Hearing
+		<td><font face="arial"><small><em>Jurisdiction
+		<td><font face="arial"><small><em>Status</td>
+	</tr>
+	
+			<tr>
+				<td><font color="#000000" face="arial"><small>90584JW&nbsp;
+				<td><font color="#000000" face="arial"><small>01/14/2010&nbsp;
+				<!--
+				<td><font color="#000000" face="arial"><small>VC 22350&nbsp; 
+				-->
+				<td><font color="#000000" face="arial"><small><span class="charges">VC&nbsp;22350</span><br><span class="charges">PC&nbsp;1214.1(A)</span>&nbsp;
+				<td><font color="#000000" face="arial"><small>None Scheduled&nbsp;
+				<td><font color="#000000" face="arial"><small>SUPERIOR COURT - BANNING JUSTICE CENTER&nbsp;
+	    <td><font color="#000000" face="arial"><small>Fine&nbsp;</td>
+			</tr>
+		
+
+</table>
+
+
+<br>
+<br>
+<b><font color="#0000FF" face="arial">Case 94947JW - WASHINGTON, JOYCE DEANNA - Actions & Minutes
+</font></b>
+<br>
+<br>
+
+<form id="frmAddMinuteOrder" name="frmAddMinuteOrder" method="POST" action="https://ecomm1.riverside.courts.ca.gov/AddToUserCart.cfm">
+	<input type="hidden" name="apiToken"    value="d0380c63-e5ad-489f-b952-976db7e397dc" >
+	<input type="hidden" name="returnPage"  value="http://public-access.riverside.courts.ca.gov/OpenAccess/Criminal/CriminalCaseReport.asp?CourtCode=C&RivInd=IND&CaseNumber=94947JW&DefNbr=175830&DefSeq=1&otnmseq=0" >
+	<input type="hidden" name="caseNumber"  value="94947JW" >
+	<input type="hidden" name="caseName"    value="WASHINGTON, JOYCE DEANNA" >
+	<input type="hidden" name="ID"          value="" >
+	<input type="hidden" name="productType" value="MIN" >
+	<input type="hidden" name="key"         value="" >
+	<input type="hidden" name="actionDate"  value="" >
+	<input type="hidden" name="actionDesc"  value="" >
+
+</form>
+
+<table border="1" style="bordercolorlight:#FFFFFF; bordercolordark:#000000;">
+  <tr>
+    <td><font face="arial"><small><em>Action Date</em></small></font></td>
+    <td><font face="arial"><small><em>Action Text</em></small></font></td>
+    <td><font face="arial"><small><em>Disposition</em></small></font></td>
+    <td><font face="arial"><small><em>Hearing Type</em></small></font></td>
+    
+  </tr>
+
+	<tr>
+		<td valign="top" width="100">
+			<font color="#000000" face="arial"><small>03/11/2011&nbsp;
+			</small></font>
+		</td>
+		<td	valign="top">
+			<font color="#000000" face="arial"><small><font color='#000000'>ENHANCED: DMV PRIOR= 00 BASE ENHANCED: 000000000 </font>&nbsp;
+			</small></font>
+		</td>
+		<!--END   DEV7071 GSK 09/03/2010-->
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		
+	</tr>
+
+	<tr>
+		<td valign="top" width="100">
+			<font color="#000000" face="arial"><small>03/10/2011&nbsp;
+			</small></font>
+		</td>
+		<td	valign="top">
+			<font color="#000000" face="arial"><small><font color='#000000'>1214.1 PC CIVIL ASSESSMENT ADDED AND DMV HOLD PLAC </font>&nbsp;
+			</small></font>
+		</td>
+		<!--END   DEV7071 GSK 09/03/2010-->
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		
+	</tr>
+
+	<tr>
+		<td valign="top" width="100">
+			<font color="#000000" face="arial"><small>02/07/2011&nbsp;
+			</small></font>
+		</td>
+		<td	valign="top">
+			<font color="#000000" face="arial"><small><font color='#000000'>FTA WARRANT 8AH TYPE AUTOMATICALLY REQUESTED. </font>&nbsp;
+			</small></font>
+		</td>
+		<!--END   DEV7071 GSK 09/03/2010-->
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		
+	</tr>
+
+	<tr>
+		<td valign="top" width="100">
+			<font color="#000000" face="arial"><small>11/10/2010&nbsp;
+			</small></font>
+		</td>
+		<td	valign="top">
+			<font color="#000000" face="arial"><small><font color='#000000'>DATE TO APPEAR IS CONTINUED TO 01/18/2011. REASON: FINAL EXTENSION</font>&nbsp;
+			</small></font>
+		</td>
+		<!--END   DEV7071 GSK 09/03/2010-->
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		
+	</tr>
+
+	<tr>
+		<td valign="top" width="100">
+			<font color="#000000" face="arial"><small>09/14/2010&nbsp;
+			</small></font>
+		</td>
+		<td	valign="top">
+			<font color="#000000" face="arial"><small><font color='#000000'>ENHANCED: DMV PRIOR= 00 BASE ENHANCED: 000001000 </font>&nbsp;
+			</small></font>
+		</td>
+		<!--END   DEV7071 GSK 09/03/2010-->
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		
+	</tr>
+
+	<tr>
+		<td valign="top" width="100">
+			<font color="#000000" face="arial"><small>09/07/2010&nbsp;
+			</small></font>
+		</td>
+		<td	valign="top">
+			<font color="#000000" face="arial"><small><font color='#000000'>CITATION FILED (IMAGE); LOCATION: SUNRISE/WILSON </font>&nbsp;
+			</small></font>
+		</td>
+		<!--END   DEV7071 GSK 09/03/2010-->
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		
+	</tr>
+
+	<tr>
+		<td valign="top" width="100">
+			<font color="#000000" face="arial"><small>09/07/2010&nbsp;
+			</small></font>
+		</td>
+		<td	valign="top">
+			<font color="#000000" face="arial"><small><font color='#000000'>CITATION FILED BY ACSF </font>&nbsp;
+			</small></font>
+		</td>
+		<!--END   DEV7071 GSK 09/03/2010-->
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		<td valign="top">
+			<font color="#000000" face="arial"><small>&nbsp;
+			</small></font>
+		</td>
+
+		
+	</tr>
+
+
+</table>
+
+
+<!--START DEV7071 GSK 09/03/2010-->
+<script language="javascript">
+//function PrintMinuteOrder(ActionMinuteIndex)
+//{
+//	var URL = '../PrintMinuteOrder.asp?CaseNumber=94947JW&Index=' + ActionMinuteIndex;
+//	var options = "";
+//	options += "left=20,top=20,screenX=20,screenY=20,";
+//	options += "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,copyhistory=no,resizable=yes";
+//	var MinuteOrderWindow = window.open(URL,"MinuteOrderWindow",options);
+//	MinuteOrderWindow.focus();
+//}
+function PrintMinuteOrder(ActionMinuteIndex)
+{
+	var URL      = "https://ecomm1.riverside.courts.ca.gov/";
+	var userID   = GetSessionVariable("JaguarUserID");
+	var UserName = GetSessionVariable("CriminalUserName").toUpperCase();
+	debug();
+	var EnableImaging = false;
+	var BypassPaymemt = false;
+	var ShowMinuteOrder = false;
+	var ButtonClickAction = "";
+
+
+	var MinuteFees = GetSessionVariable("ExpandedMinutesFees" + ActionMinuteIndex);
+	MinuteFees = MinuteFees.toUpperCase();
+
+	if (UserName != "GUEST" || MinuteFees == "TRUE"	)
+	{
+		BypassPaymemt = true;
+		ShowMinuteOrder = true;
+	} else {
+		var CourtURL = ("http://docorder.riverside.courts.ca.gov/default.aspx" != "");
+		ButtonClickAction = ((EnableImaging == true || CourtURL == false) ? "cart" : "court");
+	}
+
+	var frm = document.getElementById("frmAddMinuteOrder");
+	debug();
+	var DisplayDateTime = GetSessionVariable("ActionDateTimeDept" + ActionMinuteIndex);
+	var DisplayAction   = GetSessionVariable("ExpandedAction"     + ActionMinuteIndex);
+
+	if (ButtonClickAction == "court")
+	{
+	    //START DEV10792 GSK 2014/12/05
+	    /*
+		var msg =	"Minute Orders for this case cannot be viewed or downloaded via \n" +
+					"the Internet pursuant to California Rules of Court. \n" +
+					"Do you wish to be linked to the Court's Online Copy Request site?\n" +
+					"This system will allow you to purchase minute orders \n" +
+					"that will be printed and mailed to you.";
+        */
+        
+		var msg =	"Minute Orders for this case cannot be viewed or downloaded via the Internet pursuant to California Rules of Court. \n" +
+					"Do you wish to be linked to the Court's Online Copy Request site?\n" +
+					"This system will allow you to purchase documents and/or minute orders.\n";
+	    //END   DEV10792 GSK 2014/12/05
+
+		var answer = confirm(msg);
+		if (answer == true)
+		{
+			var def = "175830";
+			var dt = DisplayDateTime.substring(0,10);
+			dt = dt.replace(/\//g,'');
+			URL = "http://docorder.riverside.courts.ca.gov/default.aspx";
+			URL += "?type=&num=94947JW&def=" + def + "&dt=" + dt;
+			window.open (URL, "CourtDocument");
+			return;
+		}
+		return;
+	}
+
+
+	var frm = document.getElementById("frmAddMinuteOrder");
+
+	URL = '';
+	URL += 'documents/api/minuteorderskeys';
+
+	var actionKey = document.getElementById("hidActionKey" + ActionMinuteIndex);
+	var actionKeyValue = actionKey.value;
+
+	CreateXMLHttpRequest();
+	debug();
+
+	//START DEV9593 GSK 01/28/2013
+	//xmlHttp.open('GET', "../DocumentAPIProxy.asp?JSON="+encodeURIComponent(actionKeyValue), false);
+	xmlHttp.open('GET', "../DocumentAPIProxy.asp?productType=MIN&JSON="+encodeURIComponent(actionKeyValue), false);
+	//END   DEV9593 GSK 01/28/2013
+	xmlHttp.send();
+
+	var guid = "";
+	debug();
+	var rc = xmlHttp.status;
+	if (rc == 200)
+	{
+		guid = xmlHttp.responseText;
+		guid = guid.replace(/"/g,'');
+	}
+	if (guid != "")
+		if (BypassPaymemt == false)
+		{
+			CreateXMLHttpRequest();
+			URL = "https://ecomm1.riverside.courts.ca.gov/CheckUserCart.cfm";
+			var jsoninfo =  '{"apiToken":"d0380c63-e5ad-489f-b952-976db7e397dc", ' +
+						' "ID":"' + userID + '", ' +
+						' "productType":"MIN", ' +
+						' "key":"' + guid + '" } ';
+
+			xmlHttp.open('GET', "../CheckUserCartAPIProxy.asp?json="+jsoninfo, false);
+			xmlHttp.send();
+			rc = xmlHttp.status;
+
+			if (rc == 200)
+			{
+				try
+				{
+					jsoninfo = xmlHttp.responseText;
+					var response = eval( '('+jsoninfo+')');
+					rc = response.returnCode;
+				}
+				catch(err)
+				{
+					rc=-1
+				}
+
+			debug();
+			frm.action = "https://ecomm1.riverside.courts.ca.gov/AddToUserCart.cfm";
+			if (rc == -1) //There was an error
+			{
+				alert("An error occured while processing your Minute Order request.");
+			}
+
+			if (rc == 0) //Is NOT in user's cart
+			{
+				frm.elements["key"       ].value = guid;
+				frm.elements["actionDate"].value = DisplayDateTime;
+				frm.elements["actionDesc"].value = DisplayAction;
+				frm.submit();
+			}
+			if (rc == 1) //It IS in user's cart but it is NOT Paid for
+			{
+				var msg = "This Minute Order request is already in your cart but you cannot view until it has been paid for.\n" +
+						  "If you click OK you will be tranferred to your shopping cart so you can pay for your Minute Order\n" +
+						  "or you may click Cancel to continue viewing the Case Report.";
+				var answer = confirm(msg);
+				if (answer == true)
+				{
+					frm.elements["key"       ].value = guid;
+					frm.elements["actionDate"].value = DisplayDateTime;
+					frm.elements["actionDesc"].value = DisplayAction;
+					frm.submit();
+				}
+			}
+			if (rc == 2) //It IS in user's cart AND it IS Paid for
+			{
+				ShowMinuteOrder = true;
+			}
+		}
+		else
+		{
+			debug();
+			var w = window.open("","");
+			w.document.write(xmlHttp.responseText);
+		}
+	}
+	if (ShowMinuteOrder == true)
+	{
+		//var unique = UniqueKey();
+		frm.action = "../DocumentManager.asp" //?z=" + unique;
+		frm.method = "POST";
+		frm.target = "_blank";
+		//frm.target = "MinuteOrderWindow";
+		frm.elements["productType"].value = "MIN";
+		frm.elements["key"].value = guid;
+		frm.submit();
+	}
+}
+
+</script>
+<!--END    DEV7071 GSK 09/03/2010-->
+
+<!--#i n c l u d e file="finequery.asp" -->
+
+<br>
+<br>
+<b><font color="#0000FF" face="arial">Case 94947JW - WASHINGTON, JOYCE DEANNA - Fine Information
+</font></b>
+<br>
+<br>
+
+
+<table border="0">
+ <tr>
+<td><font face="arial"><small><em>&nbsp;</td><td><font color="#000000" face="arial"><small>&nbsp;</td>
+  <td width=20>&nbsp;
+  <td><font face="arial"><small><em>Date To Pay:
+  <td><font color="#000000" face="arial"><small><b>N/A
+  <td width=20>&nbsp;
+  <td><font face="arial"><small><em>First Payment:
+  <!--START DEV9707 JL 10/1/2014-->
+  <!--<td><font color="#000000" face="arial"><small><b>-->
+  <td><font color="#000000" face="arial"><small><b>//
+  <!--END DEV9707 JL 10/1/2014-->
+ </tr>
+ <tr>
+  <td><font face="arial"><small><em>Prior NSF:
+  <td><font color="#000000" face="arial"><small><b>N
+  <td width=20>&nbsp;
+  <td><font face="arial"><small><em>Payment Amount:
+  <td><font color="#000000" face="arial"><small><b>$0.00
+  <td width=20>&nbsp;
+  <td><font face="arial"><small><em>Last Payment:
+  <!--START DEV9707 JL 10/1/2014-->
+  <!--<td><font color="#000000" face="arial"><small><b>-->
+  <td><font color="#000000" face="arial"><small><b>//
+  <!--END DEV9707 JL 10/1/2014-->
+ </tr>
+</table>
+
+<br>
+
+<table border=1>
+  <tr>
+    <td><font face="arial"><small><em>Fine Number
+    <td><font face="arial"><small><em>Fine Type
+    <td><font face="arial"><small><em>Fine Description
+    <td><font face="arial"><small><em>Original Amount
+    <td><font face="arial"><small><em>Paid To Date
+    <td><font face="arial"><small><em>Current Due
+  </tr>
+  
+  <tr>
+    <td><font color="#000000" face="arial"><small>&nbsp;
+    <td><font color="#000000" face="arial"><small>&nbsp;
+    <td><font color="#000000" face="arial"><small>&nbsp;
+    <td align="right"><font face="courier">&nbsp;
+    <td align="right"><font face="courier">&nbsp;
+    <td align="right"><font face="courier">&nbsp;
+  </tr>
+  
+  <tr>
+    <td align="right" colspan="3"><font color="#000000" face="arial"><small><b>Total:
+    <td align="right"><font face="courier">$0.00&nbsp;
+    <td align="right"><font face="courier">$0.00&nbsp;
+    <td align="right"><font face="courier">$0.00&nbsp;
+  </tr>
+</table>
+
+
+
+
+
+
+<br>
+<br>
+<!--START DEV6942 GSK 08/05/2010-->
+<tr align=center>
+	<td colspan=99 align=center>
+		<input type="button" name="Print" id="Print" value="Print This Report" style="width: 180px" onclick="javascript:window.print();">
+	</td>
+</tr>
+<!--END   DEV6942 GSK 08/05/2010-->
+
+
+
+		<tr>
+			<td colspan=99 align=center>
+				<input type="button" name="Documents2" id="Documents2" value="Purchase Documents for this Case" style="width: 250px" onclick="javascript:PurchaseDocuments();">
+			</td>
+		</tr>
+
+
+
+<tr align=center>
+	<td colspan=99 align=center>
+		<input type="button" name="Close" id="Close" value="Close This Window" style="width: 180px" onclick="javascript:window.close();">
+	</td>
+</tr>
+
+<tr><td><br></td></tr>
+
+
+	</td></tr></table>
+	<br>
+<center>
+	<small>
+		Riverside Public Access 5.7.27 © 2020 Journal Technologies, Inc.  All Rights Reserved. www.isd-corp.com
+		<br>
+		<font face="arial">
+		<!-- Dev11237 09/14/2016 TF -->
+			<a <a id="maillink" name="maillink" href="https://www.riverside.courts.ca.gov/Contact/contact.php"></a>
+			<span id="mailto"></span>
+		</font>
+	</small>
+</center>
+<!--START DEV9566 GSK 01/24/2013-->
+<script type="text/javascript">
+	function OpenEmail()
+	{
+		var maillink = document.getElementById("maillink");
+		maillink.click();
+
+		var URL = "http://public-access.riverside.courts.ca.gov/OpenAccess/";
+		URL += "ContactUs.asp";
+		var xmlhttp=new XMLHttpRequest();
+		xmlhttp.open('GET', URL, false);
+		xmlhttp.send();
+	}
+
+	var link = document.getElementById("mailto");
+	link.innerHTML = "<a href='javascript:OpenEmail();'>Contact Us</" + "a>";
+</script>
+
+<noscript>
+	<center>
+		<small>
+			<font face="arial">
+				<!-- Dev11237 09/14/2016 TF -->
+				<a href="https://www.riverside.courts.ca.gov/Contact/contact.php">Contact Us</a>
+			</font>
+		</small>
+	</center>
+</noscript>
+<!--END   DEV9566 GSK 01/24/2013-->
+	</form>
+	</body>
+	</html>
+	<!--START DEV6950 GSK 08/13/2010-->
+	<script language="javascript">
+		debug();
+		var SystemCIVOTS = 'OTS';
+		var ClaimType  = 'J';
+		var CountyCode = 'RIV';
+		var CourtCode  = 'C';
+		var CaseType   = '';
+		var CaseNumber = '94947JW';
+		var DefNumber  = '175830';
+		
+		
+		var userID = GetSessionVariable("JaguarUserID");
+		var APIURL = 'http://api.isd-corp.com/Subscriptions/api/riv/subscriptions/' + 'cases/case';
+		var subTokenType = 'J';
+		
+		var ResponseText = "";
+		var xmlHttp;
+
+		var subscribed = IsCaseSubscribed();
+		AddRemoveCaseNotification(subscribed);
+
+		document.getElementById("spanLoading").innerHTML = "";
+	</script>
+	<!--END   DEV6950 GSK 08/13/2010-->
+
+	<script language="javascript">
+	function PurchaseDocuments()
+	{
+	    //START DEV10792 GSK 2014/12/05
+	    /* 
+		var msg =	"Documents for this case cannot be viewed or downloaded via \n" +
+					"the Internet pursuant to California Rules of Court.  \n" +
+					"Do you wish to be linked to the Court's Online Copy Request site? \n" +
+					"This system will allow you to purchase documents and \n" +
+					"minute orders that will be printed and mailed to you.";
+        */
+		var msg =	"Documents for this case cannot be viewed or downloaded via the Internet pursuant to California Rules of Court. \n" +
+					"Do you wish to be linked to the Court's Online Copy Request site? \n" +
+					"This system will allow you to purchase documents and/or minute orders.\n";
+	    //END   DEV10792 GSK 2014/12/05
+
+		var answer = confirm(msg);
+		if (answer == true)
+		{
+			var def = "175830";
+			var URL = "http://docorder.riverside.courts.ca.gov/default.aspx";
+			URL += "?type=&num=94947JW&def=" + def;
+			window.open(URL, "CourtDocument");
+		}
+	}
+	</script>
+	

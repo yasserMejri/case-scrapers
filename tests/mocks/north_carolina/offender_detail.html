@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+
+
+
+<html>
+
+
+<head>
+<noscript>
+<meta http-equiv="refresh" content="1; url=javascriptdisabled.html">
+</noscript>
+</head>
+<body>
+<base href="https://webapps.doc.state.nc.us/opi/">
+<title>NC DPS Offender Public Information</title>
+<script type="text/javascript" src="scripts/DHTMLmessages.js"></script>
+<!--<script type="text/javascript" src="scripts/contextmenu.js"></script>-->
+<script type="text/javascript">
+<!-- 
+if (screen.width < 1024) {
+	if (document.all) {
+	    document.write('<link rel="stylesheet" type="text/css" href="styles/opi800IE.css">');
+    }
+    else if (document.getElementById) {
+	    document.write('<link rel="stylesheet" type="text/css" href="styles/opi800.css">');
+    }
+}
+else {
+	if (document.all) {
+	    document.write('<link rel="stylesheet" type="text/css" href="styles/opi1024IE.css">');
+    }
+	else if (document.getElementById) {
+	    document.write('<link rel="stylesheet" type="text/css" href="styles/opi1024.css">');
+    }
+}
+
+function showCalendar(dateField) {
+	if (document.all) {
+		window.dateField = dateField;
+		var windowArguments = new Object();
+		windowArguments.dateField = dateField;	
+		var sFeatures = "dialogHeight:330px; dialogWidth:250px; help:off; unadorned:yes; status:no; ";
+		var answer = window.showModalDialog('/opi/calendar.html',windowArguments,sFeatures);
+		if (typeof(answer) != "undefined") {
+			dateField.value = answer;
+	    }
+	}
+	else if (document.getElementById) {
+		returnDate(dateField,null);
+		window.open('/opi/calendar.html','Calendar - Choose a Date','toolbar=0,location=0,status=0,menubar=0,scrollbars=0,resizable=0,width=250px,height=330px');
+	}
+}
+
+var mydate;
+
+function returnDate(dateField, newdate) {
+	if (dateField != null) {
+		mydate = dateField;
+	}
+	if (newdate != null && mydate != null) {
+		mydate.value = newdate;
+	}
+}
+
+function displayReport(url) {
+	if (document.all) {
+    	document.all("reportframe").src = "report.html?url=" + url + "?method=runreport";
+    }
+    else if (document.getElementById) {
+    	document.getElementById("reportframe").src = "report.html?url=" + url + "?method=runreport";
+    }
+}
+// -->
+</script>
+<div id="mainpage">
+
+<div id="banner">
+	<div id="centercontent"><center><br>North Carolina Department Of Public Safety<br>Offender Public Information</center></div>
+</div>
+<div id="box">
+	<div id="tabs">
+	  <ul>
+	    <li><a href="offendersearch.do?method=view"><span>Offender Search</span></a></li>
+	    <li><a href="offenderescapesearch.do?method=view"><span>Escapes/Captures</span></a></li>
+	    <li><a href="offenderabscondsearch.do?method=view"><span>Absconders</span></a></li>
+	    <li><a href="offenderreleasesearch.do?method=view"><span>Inmate Releases</span></a></li>
+	    <li><a href="downloads.do?method=view"><span>Downloads</span></a></li>
+	  </ul>
+	</div>
+</div>
+
+<div class="seal">&nbsp;</div>
+
+
+<div class="help"><a href="help.do"><img src="images/find.ico" border="0" alt="Got Questions?"></a></div>
+
+
+<script type="text/javascript" src="scripts/dragiframe.js"></script>
+<script type="text/javascript" src="scripts/picturescroller.js"></script>
+<div class="titlediv"><center>View Offender</center></div>
+<div class="maindiv"><br>
+	
+	
+	<table width="100%" cellspacing="2" cellpadding="5">
+		<tr align="center">
+			<td colspan="6" align="center">
+				<a href="pagelistoffendersearchresults.do?method=list&page=1&searchLastName=Smith&searchFirstName=Adam&searchDOB=12/19/1967&searchDOBRange=0" class="actionbutton">Back To Search Results</a>
+			</td>
+		</tr>
+	</table><br>
+	
+	
+	<table width="96%" cellspacing="0" cellpadding="0">
+	    <tr>
+			<td valign="top" align="center">
+				<table class="demodiv" cellspacing="0" cellpadding="0">
+				    <tr>
+				        <td>
+				            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+				                <tr>
+								    <td class="left-corner">&nbsp;</td>
+						    		<td class="box-contents">&nbsp;&nbsp;Offender Information</td>
+								    <td class="right-corner">&nbsp;</td>
+								</tr>
+						    </table>
+						</td>
+				    </tr>
+				    <tr>
+				        <td>
+							<table border="0" cellpadding="0" cellspacing="0" class="innerdisplaytable">
+								<tr>
+									<td bgcolor="#FFFACD" colspan="2"><img class="spacertop" src="images/spacertbl.gif" width="1" height="2" alt=""/></td>
+								</tr>
+								<tr>
+									<td bgcolor="#999999" colspan="2"><img class="spacerbottom" src="images/spacertbl.gif" width="1" height="1" alt=""/></td>
+								</tr>
+								<tr>
+									<td>
+										<table class="picturediv">
+											<tr>
+												<td>
+													<table class="picturetable">
+														<td>
+															<img class="photo" align="center" id="dopPicture" src="viewpicture.do?method=view&showDate=N&pictureType=I&pictureSequence=1&offenderID=0373892" border="2" />
+														</td>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+									<td>
+										<table class="demodiv">
+											<tr>
+												<td>
+													<table class="demotable">
+														<td>
+															<table class="displaydatatable">
+																<tr>
+																	<td align="center" colspan="2" nowrap><b><font size="+1">ADAM JUNIOR SMITH</font></b></td>
+																</tr>
+																<tr>
+																	<td align="right" nowrap><b>Offender Number:</b></td>
+																	<td align="left" width="220px" nowrap>0373892&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+																</tr>
+																                                                            <tr>                                                                <td align="right" nowrap><b>Probation/Parole/Post Release Status:</b></td>                                                                <td align="left" nowrap>INACTIVE</td>                                                            </tr>
+																<tr>
+																	<td align="right" nowrap><b>Gender:</b></td>
+																	<td align="left" nowrap>MALE</td>
+																</tr>
+																<tr>
+																	<td align="right" nowrap><b>Race:</b></td>
+																	<td align="left" nowrap>BLACK</td>
+																</tr>
+																<tr>
+																	<td align="right" nowrap><b>Ethnic Group:</b></td>
+																	<td align="left" nowrap>AFRICAN</td>
+																</tr>
+																<tr>
+																	<td align="right" nowrap><b>Birth Date:</b></td>
+																	<td align="left" nowrap>12/19/1967</td>
+																</tr>
+																<tr>
+																	<td align="right" nowrap><b>Age:</b></td>
+																	<td align="left" nowrap>52</td>
+																</tr>
+																
+																
+																
+																<tr>
+																	<td align="right" nowrap>&nbsp;</td>
+																	<td align="right" nowrap>&nbsp;</td>
+																</tr>
+																<tr>
+																	<td align="center" valign="bottom" nowrap colspan="2">
+																		<table cellspacing="2" cellpadding="5">
+																			<tr>
+																				<td>
+																					<a href="offenderreport.do?method=viewreport&offenderID=0373892&summary=N&listpage=1&listurl=pagelistoffendersearchresults&searchLastName=Smith&searchFirstName=Adam&searchDOB=12/19/1967&searchDOBRange=0" id="printablelink" class="actionbutton" onclick="javascript:requestPrintable()">Printable Version</a>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																</tr>
+													    	</table>
+													    </td>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+						    
+							
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<table width="96%" align="center" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td><br>
+	            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	                <tr>
+					    <td class="left-corner">&nbsp;</td>
+			    		<td class="box-contents">&nbsp;&nbsp;Name(s) Of Record</td>
+					    <td class="right-corner">&nbsp;</td>
+					</tr>
+			    </table>
+			</td>
+		</tr>						
+		<tr>
+			<td>
+				<table width="100%" border="0" cellpadding="1" cellspacing="0" bgcolor="#6B79A5">
+					<tr>
+						<td>
+							<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+								<tr>
+								    <td bgcolor="#FFFACD"><img class="spacertop" src="images/spacertbl.gif" width="1" height="2" alt="" /></td>
+						    	</tr>
+								<tr>
+								    <td bgcolor="#999999"><img class="spacerbottom" src="images/spacertbl.gif" width="1" height="1" alt="" /></td>
+								</tr>
+								<tr align="center">
+									<td><table  class="datainput" width="100%" border="0" cellspacing="1" cellpadding="2" align="center">
+<tr class="tableRowHeader"><th valign="bottom" align="left" class="tableCellHeader"><br>Last Name</th>
+<th valign="bottom" align="left" class="tableCellHeader"><br>Suffix</th>
+<th valign="bottom" align="left" class="tableCellHeader"><br>First Name</th>
+<th valign="bottom" align="left" class="tableCellHeader"><br>Middle Name</th>
+<th valign="bottom" align="left" class="tableCellHeader"><br>Name Type</th>
+</tr>
+<tr class="tableRowOdd">
+<td  class="tableCell" align="left" nowrap valign="top">SMITH</td>
+<td  class="tableCell" align="left" nowrap valign="top"></td>
+<td  class="tableCell" align="left" nowrap valign="top">ADAM</td>
+<td  class="tableCell" align="left" nowrap valign="top">JUNIOR</td>
+<td  class="tableCell" align="left" nowrap valign="top">COMMITTED</td>
+</tr>
+<tr class="tableRowEven">
+<td  class="tableCell" align="left" nowrap valign="top">SMITH</td>
+<td  class="tableCell" align="left" nowrap valign="top"></td>
+<td  class="tableCell" align="left" nowrap valign="top">JUNIOR</td>
+<td  class="tableCell" align="left" nowrap valign="top"></td>
+<td  class="tableCell" align="left" nowrap valign="top">ALIAS</td>
+</tr>
+<tr class="tableRowOdd">
+<td  class="tableCell" align="left" nowrap valign="top">SMITHE</td>
+<td  class="tableCell" align="left" nowrap valign="top"></td>
+<td  class="tableCell" align="left" nowrap valign="top">ADAM</td>
+<td  class="tableCell" align="left" nowrap valign="top">JUNIOR</td>
+<td  class="tableCell" align="left" nowrap valign="top">ALIAS</td>
+</tr>
+</table>
+</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<br>
+	
+	<table width="96%" align="center" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td><br>
+	            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	                <tr>
+					    <td class="left-corner">&nbsp;</td>
+			    		<td class="box-contents">&nbsp;&nbsp;Most Recent Incarceration Summary</td>
+					    <td class="right-corner">&nbsp;</td>
+					</tr>
+			    </table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%" border="0" cellpadding="1" cellspacing="0" bgcolor="#6B79A5">
+					<tr>
+						<td>
+							<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+								<tr>
+								    <td bgcolor="#FFFACD"><img class="spacertop" src="images/spacertbl.gif" width="1" height="2" alt="" /></td>
+						    	</tr>
+								<tr>
+								    <td bgcolor="#999999"><img class="spacerbottom" src="images/spacertbl.gif" width="1" height="1" alt="" /></td>
+								</tr>
+								<tr align="center">
+									<td>
+										<table class="displaydatatable">
+											<tr align="center">
+												<td align="right" nowrap><img src="images/spacertbl.gif" class="mostrecentcol1" height="1" alt="" /></td>
+												<td align="right" nowrap><img src="images/spacertbl.gif" class="mostrecentcol2" height="1" alt="" /></td>
+												<td align="right" nowrap><img src="images/spacertbl.gif" class="mostrecentcol3" height="1" alt="" /></td>
+												<td align="right" nowrap><img src="images/spacertbl.gif" class="mostrecentcol4" height="1" alt="" /></td>
+											</tr>
+								            
+											
+											<tr align="center">
+												<td align="center" nowrap colspan="6"><b>No Incarceration Record Found</b></td>
+											</tr>
+											
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	
+	<br>
+	<table width="96%" align="center" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td><br>
+	            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	                <tr>
+					    <td class="left-corner">&nbsp;</td>
+			    		<td class="box-contents">&nbsp;&nbsp;Offender Sentence History</td>
+					    <td class="right-corner">&nbsp;</td>
+					</tr>
+			    </table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%" border="0" cellpadding="1" cellspacing="0" bgcolor="#6B79A5">
+					<tr>
+						<td>
+							<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+								<tr>
+								    <td bgcolor="#FFFACD"><img class="spacertop" src="images/spacertbl.gif" width="1" height="2" alt="" /></td>
+						    	</tr>
+								<tr>
+								    <td bgcolor="#999999"><img class="spacerbottom" src="images/spacertbl.gif" width="1" height="1" alt="" /></td>
+								</tr>
+								<tr align="center">
+									<td>
+									<br><table width="96%" class="sentencedisplaytable"><tr align="center" bgcolor="#004080"><td align="center" nowrap colspan="6"><font color="FFFFFF"><b>Most Recent Period of Supervision Record</b></font></td></tr><tr align="center"><td><table width="98%" class="innerdisplaytable"><tr><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td></tr><tr align="center"><td align="right" nowrap><b>Sentence Number:</b></td><td align="left" nowrap>06-001</td><td align="right" nowrap><b>Commitment Type:</b></td><td align="left" nowrap>PROBATION/PAROLE</td></tr><tr align="center"><td align="right" nowrap><b>Conviction Date:</b></td><td align="left" nowrap>12/03/2003</td><td align="right" nowrap><b>County Of Conviction:</b></td><td align="left" nowrap>PITT</td></tr><tr align="center"><td align="right" nowrap><b>Punishment Type:</b></td><td align="left" nowrap>COMMUNITY SS (DCC)</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 1:</b></td><td align="left" nowrap>PROBATION</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 2:</b></td><td align="left" nowrap>SUSPENDED SENTENCE</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 3:</b></td><td align="left" nowrap>COUNTY JAIL</td></tr><tr><td colspan="4" class="sentencepanel"><table width="98%" class="datainput" border="0" cellspacing="1" cellpadding="2" align="center"><tr class="tableRowHeader"><th valign="bottom" align="left" class="tableCellHeader"><br>Commitment</th><th valign="bottom" align="left" class="tableCellHeader"><br>Docket#</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense (Qualifier)</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense Date</th><th valign="bottom" align="left" class="tableCellHeader"><br>Type</th><th valign="bottom" align="left" class="tableCellHeader"><br>Sentencing<br>Penalty<br>Class Code</th></tr><tr><td><img src="images/spacertbl.gif" class="sentencecol1" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol2" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol3" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol4" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol5" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol6" height="1" alt="" /></td></tr><tr class="tableRowOdd"><td class="tableCell" align="left" valign="top">CONCURRENT TO SENTENCE NUMBER 05-001</td><td class="tableCell" align="left" nowrap valign="top">03063656</td><td class="tableCell" align="left" valign="top">ASSAULT ON FEMALE (PRINCIPAL)</td><td class="tableCell" align="left" nowrap valign="top">10/31/2003</td><td class="tableCell" align="left" nowrap valign="top">MISD.</td><td class="tableCell" align="left" valign="top">CLASS A1 MISDEMEANOR SS</td></tr><tr class="tableRowEven"><td  class="tableCell" align="left" valign="top">CONSOLIDATED FOR JUDGMENT</td><td  class="tableCell" align="left" nowrap valign="top">03063656</td><td  class="tableCell" align="left" valign="top">INTERFERING W/ EMERGENCY COMMU (PRINCIPAL)</td><td  class="tableCell" align="left" nowrap valign="top">10/31/2003</td><td  class="tableCell" align="left" nowrap valign="top">MISD.</td><td  class="tableCell" align="left" valign="top">CLASS A1 MISDEMEANOR SS</td></tr></table></tr></td></table></td></tr></table><br><table width="96%" class="sentencedisplaytable"><tr align="center" bgcolor="#004080"><td align="center" nowrap colspan="6"><font color="FFFFFF"><b>Previous Period of Supervision Record</b></font></td></tr><tr align="center"><td><table width="98%" class="innerdisplaytable"><tr><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td></tr><tr align="center"><td align="right" nowrap><b>Sentence Number:</b></td><td align="left" nowrap>05-001</td><td align="right" nowrap><b>Commitment Type:</b></td><td align="left" nowrap>PROBATION/PAROLE</td></tr><tr align="center"><td align="right" nowrap><b>Conviction Date:</b></td><td align="left" nowrap>06/12/2001</td><td align="right" nowrap><b>County Of Conviction:</b></td><td align="left" nowrap>PITT</td></tr><tr align="center"><td align="right" nowrap><b>Punishment Type:</b></td><td align="left" nowrap>COMMUNITY SS (DCC)</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 1:</b></td><td align="left" nowrap>PROBATION</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 2:</b></td><td align="left" nowrap>SUSPENDED SENTENCE</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 3:</b></td><td align="left" nowrap>COUNTY JAIL</td></tr><tr><td colspan="4" class="sentencepanel"><table width="98%" class="datainput" border="0" cellspacing="1" cellpadding="2" align="center"><tr class="tableRowHeader"><th valign="bottom" align="left" class="tableCellHeader"><br>Commitment</th><th valign="bottom" align="left" class="tableCellHeader"><br>Docket#</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense (Qualifier)</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense Date</th><th valign="bottom" align="left" class="tableCellHeader"><br>Type</th><th valign="bottom" align="left" class="tableCellHeader"><br>Sentencing<br>Penalty<br>Class Code</th></tr><tr><td><img src="images/spacertbl.gif" class="sentencecol1" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol2" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol3" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol4" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol5" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol6" height="1" alt="" /></td></tr><tr class="tableRowOdd"><td class="tableCell" align="left" valign="top">INITIAL</td><td class="tableCell" align="left" nowrap valign="top">00062615</td><td class="tableCell" align="left" valign="top">DRIV LICENSE REVOKED (PRINCIPAL)</td><td class="tableCell" align="left" nowrap valign="top">11/01/2000</td><td class="tableCell" align="left" nowrap valign="top">MISD.</td><td class="tableCell" align="left" valign="top">CLASS 1 MISDEMEANOR SS</td></tr></table></tr></td></table></td></tr></table><br><table width="96%" class="sentencedisplaytable"><tr align="center" bgcolor="#004080"><td align="center" nowrap colspan="6"><font color="FFFFFF"><b>Previous Period of Supervision Record</b></font></td></tr><tr align="center"><td><table width="98%" class="innerdisplaytable"><tr><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td></tr><tr align="center"><td align="right" nowrap><b>Sentence Number:</b></td><td align="left" nowrap>04-001</td><td align="right" nowrap><b>Commitment Type:</b></td><td align="left" nowrap>PROBATION/PAROLE</td></tr><tr align="center"><td align="right" nowrap><b>Conviction Date:</b></td><td align="left" nowrap>10/15/1997</td><td align="right" nowrap><b>County Of Conviction:</b></td><td align="left" nowrap>MARTIN</td></tr><tr align="center"><td align="right" nowrap><b>Punishment Type:</b></td><td align="left" nowrap>INTERMEDIATE SS</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 1:</b></td><td align="left" nowrap>PROBATION</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 2:</b></td><td align="left" nowrap>SUSPENDED SENTENCE</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 3:</b></td><td align="left" nowrap>COUNTY JAIL</td></tr><tr><td colspan="4" class="sentencepanel"><table width="98%" class="datainput" border="0" cellspacing="1" cellpadding="2" align="center"><tr class="tableRowHeader"><th valign="bottom" align="left" class="tableCellHeader"><br>Commitment</th><th valign="bottom" align="left" class="tableCellHeader"><br>Docket#</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense (Qualifier)</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense Date</th><th valign="bottom" align="left" class="tableCellHeader"><br>Type</th><th valign="bottom" align="left" class="tableCellHeader"><br>Sentencing<br>Penalty<br>Class Code</th></tr><tr><td><img src="images/spacertbl.gif" class="sentencecol1" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol2" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol3" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol4" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol5" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol6" height="1" alt="" /></td></tr><tr class="tableRowOdd"><td class="tableCell" align="left" valign="top">CONCURRENT TO SENTENCE NUMBER 03-001</td><td class="tableCell" align="left" nowrap valign="top">97001994</td><td class="tableCell" align="left" valign="top">MISC MOTOR VEHICLE VIOLATION (PRINCIPAL)</td><td class="tableCell" align="left" nowrap valign="top">07/18/1997</td><td class="tableCell" align="left" nowrap valign="top">MISD.</td><td class="tableCell" align="left" valign="top">CLASS 1 MISDEMEANOR SS</td></tr><tr class="tableRowEven"><td  class="tableCell" align="left" valign="top">CONSOLIDATED FOR JUDGMENT</td><td  class="tableCell" align="left" nowrap valign="top">97001994</td><td  class="tableCell" align="left" valign="top">DRIV LICENSE REVOKED (PRINCIPAL)</td><td  class="tableCell" align="left" nowrap valign="top">07/18/1997</td><td  class="tableCell" align="left" nowrap valign="top">MISD.</td><td  class="tableCell" align="left" valign="top">CLASS 1 MISDEMEANOR SS</td></tr></table></tr></td></table></td></tr><tr align="center"><td><table width="98%" class="innerdisplaytable"><tr><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td></tr><tr align="center"><td align="right" nowrap><b>Sentence Number:</b></td><td align="left" nowrap>03-001</td><td align="right" nowrap><b>Commitment Type:</b></td><td align="left" nowrap>PROBATION/PAROLE</td></tr><tr align="center"><td align="right" nowrap><b>Conviction Date:</b></td><td align="left" nowrap>08/23/1995</td><td align="right" nowrap><b>County Of Conviction:</b></td><td align="left" nowrap>MARTIN</td></tr><tr align="center"><td align="right" nowrap><b>Punishment Type:</b></td><td align="left" nowrap>COMMUNITY SS (DCC)</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 1:</b></td><td align="left" nowrap>PROBATION</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 2:</b></td><td align="left" nowrap>SUSPENDED SENTENCE</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 3:</b></td><td align="left" nowrap>COUNTY JAIL</td></tr><tr><td colspan="4" class="sentencepanel"><table width="98%" class="datainput" border="0" cellspacing="1" cellpadding="2" align="center"><tr class="tableRowHeader"><th valign="bottom" align="left" class="tableCellHeader"><br>Commitment</th><th valign="bottom" align="left" class="tableCellHeader"><br>Docket#</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense (Qualifier)</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense Date</th><th valign="bottom" align="left" class="tableCellHeader"><br>Type</th><th valign="bottom" align="left" class="tableCellHeader"><br>Sentencing<br>Penalty<br>Class Code</th></tr><tr><td><img src="images/spacertbl.gif" class="sentencecol1" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol2" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol3" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol4" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol5" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol6" height="1" alt="" /></td></tr><tr class="tableRowOdd"><td class="tableCell" align="left" valign="top">CONCURRENT TO SENTENCE NUMBER 02-001</td><td class="tableCell" align="left" nowrap valign="top">95002167</td><td class="tableCell" align="left" valign="top">OTHER MISDEMEANANT (PRINCIPAL)</td><td class="tableCell" align="left" nowrap valign="top">05/14/1995</td><td class="tableCell" align="left" nowrap valign="top">MISD.</td><td class="tableCell" align="left" valign="top">CLASS 1 MISDEMEANOR SS</td></tr></table></tr></td></table></td></tr><tr align="center"><td><table width="98%" class="innerdisplaytable"><tr><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td></tr><tr align="center"><td align="right" nowrap><b>Sentence Number:</b></td><td align="left" nowrap>02-001</td><td align="right" nowrap><b>Commitment Type:</b></td><td align="left" nowrap>PROBATION/PAROLE</td></tr><tr align="center"><td align="right" nowrap><b>Conviction Date:</b></td><td align="left" nowrap>08/23/1995</td><td align="right" nowrap><b>County Of Conviction:</b></td><td align="left" nowrap>MARTIN</td></tr><tr align="center"><td align="right" nowrap><b>Punishment Type:</b></td><td align="left" nowrap>COMMUNITY SS (DCC)</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 1:</b></td><td align="left" nowrap>PROBATION</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 2:</b></td><td align="left" nowrap>SUSPENDED SENTENCE</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 3:</b></td><td align="left" nowrap>COUNTY JAIL</td></tr><tr><td colspan="4" class="sentencepanel"><table width="98%" class="datainput" border="0" cellspacing="1" cellpadding="2" align="center"><tr class="tableRowHeader"><th valign="bottom" align="left" class="tableCellHeader"><br>Commitment</th><th valign="bottom" align="left" class="tableCellHeader"><br>Docket#</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense (Qualifier)</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense Date</th><th valign="bottom" align="left" class="tableCellHeader"><br>Type</th><th valign="bottom" align="left" class="tableCellHeader"><br>Sentencing<br>Penalty<br>Class Code</th></tr><tr><td><img src="images/spacertbl.gif" class="sentencecol1" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol2" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol3" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol4" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol5" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol6" height="1" alt="" /></td></tr><tr class="tableRowOdd"><td class="tableCell" align="left" valign="top">INITIAL</td><td class="tableCell" align="left" nowrap valign="top">95001111</td><td class="tableCell" align="left" valign="top">DRIV LICENSE REVOKED (PRINCIPAL)</td><td class="tableCell" align="left" nowrap valign="top">05/14/1995</td><td class="tableCell" align="left" nowrap valign="top">MISD.</td><td class="tableCell" align="left" valign="top">CLASS 1 MISDEMEANOR SS</td></tr></table></tr></td></table></td></tr></table><br><table width="96%" class="sentencedisplaytable"><tr align="center" bgcolor="#004080"><td align="center" nowrap colspan="6"><font color="FFFFFF"><b>Previous Period of Supervision Record</b></font></td></tr><tr align="center"><td><table width="98%" class="innerdisplaytable"><tr><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimglbl" src="images/spacertbl.gif" height="1" alt="" /></td><td><img class="sentenceimgtxt" src="images/spacertbl.gif" height="1" alt="" /></td></tr><tr align="center"><td align="right" nowrap><b>Sentence Number:</b></td><td align="left" nowrap>01-001</td><td align="right" nowrap><b>Commitment Type:</b></td><td align="left" nowrap>PROBATION/PAROLE</td></tr><tr align="center"><td align="right" nowrap><b>Conviction Date:</b></td><td align="left" nowrap>04/10/1992</td><td align="right" nowrap><b>County Of Conviction:</b></td><td align="left" nowrap>PITT</td></tr><tr align="center"><td align="right" nowrap><b>Punishment Type:</b></td><td align="left" nowrap>PRE-SS (FAIR) DCC</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 1:</b></td><td align="left" nowrap>PROBATION</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 2:</b></td><td align="left" nowrap>SUSPENDED SENTENCE</td></tr><tr align="center"><td align="right" nowrap><b>Sentence Type 3:</b></td><td align="left" nowrap>DEPT OF CORR   DIV OF PRISONS</td></tr><tr><td colspan="4" class="sentencepanel"><table width="98%" class="datainput" border="0" cellspacing="1" cellpadding="2" align="center"><tr class="tableRowHeader"><th valign="bottom" align="left" class="tableCellHeader"><br>Commitment</th><th valign="bottom" align="left" class="tableCellHeader"><br>Docket#</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense (Qualifier)</th><th valign="bottom" align="left" class="tableCellHeader"><br>Offense Date</th><th valign="bottom" align="left" class="tableCellHeader"><br>Type</th><th valign="bottom" align="left" class="tableCellHeader"><br>Sentencing<br>Penalty<br>Class Code</th></tr><tr><td><img src="images/spacertbl.gif" class="sentencecol1" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol2" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol3" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol4" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol5" height="1" alt="" /></td><td><img src="images/spacertbl.gif" class="sentencecol6" height="1" alt="" /></td></tr><tr class="tableRowOdd"><td class="tableCell" align="left" valign="top">INITIAL</td><td class="tableCell" align="left" nowrap valign="top">92007147</td><td class="tableCell" align="left" valign="top">LARCENY (OVER $200) (PRINCIPAL)</td><td class="tableCell" align="left" nowrap valign="top">01/10/1991</td><td class="tableCell" align="left" nowrap valign="top">MISD.</td><td class="tableCell" align="left" valign="top">MISD.(PRE-STRUCTURE)</td></tr></table></tr></td></table></td></tr></table><br>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>		
+</div>
+<div class="bottomdiv">
+<table align="center" cellpadding="0" cellspacing="1">
+	<tr>
+		<td colspan="2">&nbsp;
+		</td>
+	</tr>
+	<tr>
+		<td align="left" valign="top" width="24%">
+			<a href="http://www.nc.gov"><img src="images/logo_ncgov_110x37.gif" alt="North Carolina - A better place to be, www.nc.gov" width="112" height="40" border="0"></a></td>
+		<td valign="top" align="left" width="76%">
+			<span style="white-space:nowrap">
+				<a class="footerlink" href="privacy.do">Privacy Policy</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="footerlink" href="disclaimer.do">Disclaimer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="footerlink" href="contact.do">Contact Us</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="footerlink" href="help.do">Help Using This Site</a>
+			</span>				
+			<span class="copyright" style="font-weight: bold; font-size: 12px;"><br>&copy 2012 North Carolina Department Of Public Safety. All rights reserved.</span>
+		</td>
+	</tr>
+</table>
+
+
+</div>
+</div>
+</body>
+</html>

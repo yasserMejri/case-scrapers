@@ -1,0 +1,359 @@
+<!-- [PartyResult] -->
+
+
+<script src="/Portal/Scripts/portlets/SmartSearch/portlet.smartSearchResults.js"></script>
+<script type="text/javascript">
+  (function() {
+    window.odyPortal.smartSearchCaseChargesEndpointURL = 'https://publicrecordsaccess.fultoncountyga.gov/Portal/SmartSearch/SmartSearchResults/CaseCharges';
+    window.odyPortal.smartSearchResultCaseIDs = '';
+    window.odyPortal.smartSearchShowChargesAndDispositions = 'False' === 'True' ? true : false;
+
+    
+    window.lastElementClicked = null;
+    window.lastElementClickedOffset = null;
+
+    $(document).mouseup(function (event) {
+      window.lastElementClicked = event.target;
+      var idOfLastElementClicked = $(lastElementClicked).attr('id');
+      var lastElement = $('#' + idOfLastElementClicked);
+      try {
+        window.lastElementClickedOffset = document.getElementById(idOfLastElementClicked).getBoundingClientRect().y;
+      } catch (err) {
+        window.lastElementClickedOffset = 0;
+      }
+    });
+  })()
+</script>
+
+
+
+<div class="section" id="PartyResultSection">
+  <span id="BusyIndicator"></span>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      
+
+
+
+<button class="btn btn-default pull-right noprint " type="button"
+        onclick="window.print();">Print</button>
+      <h1>Party Search Results</h1>
+      <script type="text/javascript">
+        (function() {
+          window.usePersonaCaseSummary = "False" === "True" ? true : false;
+          window.odyPortal.smartSearchResultsObj = null;
+          $(function () {
+            window.odyPortal.smartSearchResultsObj = new window.odyPortal.SmartSearchResults();
+            window.odyPortal.smartSearchResultsObj.init('/Portal/SmartSearch/BaseSmartSearch/ClearTab', '/Portal/SmartSearch/Party/LoadPartyData', '/Portal/SmartSearch/Warrant/LoadWarrantGridResult', '/Portal/SmartSearch/Case/CaseResultsGrid', '/Portal/SmartSearch/Judgment/JudgmentResultsGrid', '/Portal/SmartSearch/ProtectionOrder/ResultsGrid');
+          });
+          window.smartSearchGridResultsObj = null;
+          $(function () {
+            window.smartSearchGridResultsObj = new SmartSearchGridResults();
+            window.smartSearchGridResultsObj.init('/Portal/SmartSearch/Warrant/LoadWarrantData', '/Portal/SmartSearch/Judgment/LoadJudgmentData', '/Portal/SmartSearch/ProtectionOrder/LoadProtectionOrderDetail');
+          });
+        })();
+      </script>
+
+      <div id="SmartSearchResults">
+
+        
+
+        <div class="searchResultsDiv party"
+             id="searchResultsDiv">
+
+<div class="k-widget k-grid" id="Grid"><table cellspacing="0"><colgroup><col /><col /></colgroup><thead class="k-grid-header"><tr><th class="k-header" data-field="NameSort" data-title="Name" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;Grid-sort=NameSort-asc">Name</a></th><th class="k-header" data-field="DateOfBirthSort" data-title="Date of Birth" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;Grid-sort=DateOfBirthSort-asc">Date of Birth</a></th></tr></thead><tbody><tr><td style="text-align:left">baker, stuart</td><td style="text-align:left">&nbsp;</td></tr><tr class="k-alt"><td style="text-align:left">baker, stuart i</td><td style="text-align:left">&nbsp;</td></tr></tbody></table></div><script>
+	jQuery(function(){jQuery("#Grid").kendoGrid({"dataBound":window.odyPortal.smartSearchResultsObj.gridDataBound,"detailInit":window.odyPortal.smartSearchResultsObj.gridDetailInit,"columns":[{"title":"Name","attributes":{"style":"text-align:left"},"template":"\u003ca class=\u0027partyDataLink\u0027 data-party-id=\u0027#=EncryptedPartyId#\u0027\u003e#=Name#\u003c/a\u003e","field":"NameSort","encoded":true},{"title":"Date of Birth","attributes":{"style":"text-align:left"},"template":"#= (DateOfBirth||\u0027\u0027) #","field":"DateOfBirthSort","encoded":true}],"sortable":true,"filterable":{"extra":false,"messages":{"filter":"Apply"}},"columnMenu":true,"scrollable":false,"dataSource":{"transport":{"read":{"url":""}},"type":"aspnetmvc-ajax","requestEnd":window.odyPortal.smartSearchResultsObj.gridReadEnd,"schema":{"data":"Data","total":"Total","errors":"Errors","model":{"fields":{"PartyId":{"type":"number","defaultValue":null},"EncryptedPartyId":{"editable":false,"type":"string"},"NameFirst":{"type":"string"},"NameMid":{"type":"string"},"NameLast":{"type":"string"},"Address1":{"type":"string"},"Address2":{"type":"string"},"Address3":{"type":"string"},"City":{"type":"string"},"State":{"type":"string"},"Zip":{"type":"string"},"HomePhoneNumber":{"type":"string"},"CellPhoneNumber":{"type":"string"},"Race":{"type":"string"},"Gender":{"type":"string"},"Height":{"type":"string"},"Weight":{"type":"string"},"HairColor":{"type":"string"},"EyeColor":{"type":"string"},"DateOfBirth":{"type":"string"},"PersonId":{"type":"number"},"DLNumber":{"type":"string"},"DLState":{"type":"string"},"DateOfBirthSort":{"editable":false,"type":"date","defaultValue":null},"NodeID":{"type":"string"},"CaseResultCount":{"type":"number"},"CaseResults":{"type":"object"},"WarrantResultCount":{"type":"number"},"WarrantResults":{"type":"object"},"ProtectionOrderResultCount":{"type":"number"},"ProtectionOrderResults":{"type":"object"},"JudgmentResultCount":{"type":"number"},"JudgmentResults":{"type":"object"},"CaseResultsProjected":{"editable":false,"type":"object"},"Name":{"editable":false,"type":"string"},"NameSort":{"editable":false,"type":"string"}}}},"data":{"Data":[{"PartyId":1500117,"EncryptedPartyId":"2vOD_9M_hpLjZgoL9fqjDw2","NameFirst":"STUART","NameMid":null,"NameLast":"BAKER","Address1":null,"Address2":null,"Address3":null,"City":null,"State":null,"Zip":null,"HomePhoneNumber":"","CellPhoneNumber":"","Race":"White","Gender":"Male","Height":null,"Weight":null,"HairColor":null,"EyeColor":null,"DateOfBirth":"XX/XX/XXXX","PersonId":0,"DLNumber":null,"DLState":"","DateOfBirthSort":null,"NodeID":"201","CaseResultCount":1,"CaseResults":[{"NodeID":"201","LocationName":"State Court","CaseId":1110079,"EncryptedCaseId":"AuaSU_oggBF_Fp_x6BPjCg2","Charges":[],"CaseLoadUrl":"https://publicrecordsaccess.fultoncountyga.gov/Portal/Case/CaseDetail?eid=AuaSU_oggBF_Fp_x6BPjCg2\u0026tabIndex=3","CaseNumber":"93-CR-137947","Style":"STATE VS BAKER, STUART","FileDate":"11/5/1993 12:00:00 AM","CaseTypeId":{"Word":"TCM","Description":"MISDEMEANOR","HasValue":true},"CaseStatusId":{"Word":"CONVC","Description":"Conversion - Closed","HasValue":true},"DefendantName":"BAKER, STUART","CaseCategoryKey":"CR","DateOfBirth":"XX/XX/XXXX","PartyTypeKey":"Defendant","FileDateParsed":"\/Date(752475600000)\/","DoBSortKey":"\/Date(-62135578800000)\/"}],"WarrantResultCount":0,"WarrantResults":[],"ProtectionOrderResultCount":0,"ProtectionOrderResults":[],"JudgmentResultCount":0,"JudgmentResults":[],"CaseResultsProjected":[{"NodeID":"201","LocationName":"State Court","CaseId":1110079,"EncryptedCaseId":"AuaSU_oggBF_Fp_x6BPjCg2","Charges":[],"CaseLoadUrl":"https://publicrecordsaccess.fultoncountyga.gov/Portal/Case/CaseDetail?eid=AuaSU_oggBF_Fp_x6BPjCg2\u0026tabIndex=3","CaseNumber":"93-CR-137947","Style":"STATE VS BAKER, STUART","FileDate":"\/Date(752475600000)\/","FileDateText":"11/05/1993","CaseTypeId":{"Word":"TCM","Description":"MISDEMEANOR","HasValue":true},"CaseStatusId":{"Word":"CONVC","Description":"Conversion - Closed","HasValue":true},"DefendantName":"BAKER, STUART","CaseCategoryKey":"CR","DateOfBirth":"XX/XX/XXXX","PartyTypeKey":"Defendant","DoBSortKey":"\/Date(-62135578800000)\/"}],"Name":"BAKER, STUART","NameSort":"baker, stuart"},{"PartyId":13217527,"EncryptedPartyId":"GCVivMScjnRjv9tfVFJhKQ2","NameFirst":"STUART","NameMid":"I","NameLast":"BAKER","Address1":null,"Address2":null,"Address3":null,"City":null,"State":null,"Zip":null,"HomePhoneNumber":"","CellPhoneNumber":"","Race":null,"Gender":null,"Height":null,"Weight":null,"HairColor":null,"EyeColor":null,"DateOfBirth":null,"PersonId":0,"DLNumber":null,"DLState":"","DateOfBirthSort":null,"NodeID":"156","CaseResultCount":1,"CaseResults":[{"NodeID":"156","LocationName":"EJ7","CaseId":6070594,"EncryptedCaseId":"27Qfw55yzyMnPkWny_6gIA2","Charges":[],"CaseLoadUrl":"https://publicrecordsaccess.fultoncountyga.gov/Portal/Case/CaseDetail?eid=27Qfw55yzyMnPkWny_6gIA2\u0026tabIndex=3","CaseNumber":"E49477","Style":"COHEN vs BAKER","FileDate":"6/12/1996 12:00:00 AM","CaseTypeId":{"Word":"SOCCA","Description":"OTHER CIVIL CAUSE OF ACTION","HasValue":true},"CaseStatusId":{"Word":"SCLOS","Description":"Closed","HasValue":true},"DefendantName":"BAKER, BETSY C","CaseCategoryKey":"CV","DateOfBirth":null,"PartyTypeKey":"Defendant","FileDateParsed":"\/Date(834552000000)\/","DoBSortKey":"\/Date(-62135578800000)\/"}],"WarrantResultCount":0,"WarrantResults":[],"ProtectionOrderResultCount":0,"ProtectionOrderResults":[],"JudgmentResultCount":0,"JudgmentResults":[],"CaseResultsProjected":[{"NodeID":"156","LocationName":"EJ7","CaseId":6070594,"EncryptedCaseId":"27Qfw55yzyMnPkWny_6gIA2","Charges":[],"CaseLoadUrl":"https://publicrecordsaccess.fultoncountyga.gov/Portal/Case/CaseDetail?eid=27Qfw55yzyMnPkWny_6gIA2\u0026tabIndex=3","CaseNumber":"E49477","Style":"COHEN vs BAKER","FileDate":"\/Date(834552000000)\/","FileDateText":"06/12/1996","CaseTypeId":{"Word":"SOCCA","Description":"OTHER CIVIL CAUSE OF ACTION","HasValue":true},"CaseStatusId":{"Word":"SCLOS","Description":"Closed","HasValue":true},"DefendantName":"BAKER, BETSY C","CaseCategoryKey":"CV","DateOfBirth":null,"PartyTypeKey":"Defendant","DoBSortKey":"\/Date(-62135578800000)\/"}],"Name":"BAKER, STUART I","NameSort":"baker, stuart i"}],"Total":2}},"detailTemplate":kendo.template($('#PartyCardTemplate').html())});});
+</script>
+
+        </div>
+
+        <div class="noResults" id="partyNoResults" style="display: none">No search results matched your selection criteria.</div>
+
+      </div>
+
+      <!-- [KendoPartyCardTemplate] -->
+
+
+
+<!-- [KendoCaseGridTemplate] -->
+
+
+<script>
+  function kendoCaseGridTemplateInitializer(data) {
+    var PartyResult = $("#Grid").data('kendoGrid').dataItem($("a[data-party-id='" + data.PartyId + "']").closest('tr'));
+    var caseResults = PartyResult && PartyResult.CaseResultsProjected;
+    if (caseResults) {
+      caseResults.forEach(function(el) {
+        if (typeof el.FileDate === 'string') {
+          el.FileDate = new Date(parseInt(el.FileDate.substr(6)));
+        }
+        if (typeof el.DoBSortKey === 'string') {
+          el.DoBSortKey = new Date(parseInt(el.DoBSortKey.substr(6)));
+        }
+      });
+
+      var dataSourceResults = new kendo.data.DataSource({
+        data: caseResults,
+        pageSize: 10,
+        sort: {
+          field: "FileDate",
+          dir: "desc"
+        }
+      });
+
+      var grid = jQuery("#CaseResultsGrid_" + data.PartyId).data('kendoGrid');
+
+      // Hide the pager if the results are 10 or less.
+      if (caseResults.length <= 10) {
+        grid.pager.element.hide();
+      }
+
+      grid.setDataSource(dataSourceResults);
+      grid.dataSource.read();
+      grid.refresh();
+    }
+  }
+</script>
+
+<script id="CaseGridTemplate"
+        type="text/kendo-tmpl">
+  <div id="caseContainer_#=PartyId#" class="party-results-container cases-container">
+    <div class="heading">
+      Cases
+    </div>
+    <div class="k-widget k-grid can-morph-to-card" id="CaseResultsGrid_#=PartyId#"><table cellspacing="0"><colgroup><col /><col /><col /><col /><col /></colgroup><thead class="k-grid-header"><tr><th class="k-header" data-configurable-grid="True" data-field="CaseNumber" data-title="Case Number" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;CaseResultsGrid_%23%3DPartyId%23-sort=CaseNumber-asc">Case Number</a></th><th class="k-header" data-configurable-grid="True" data-field="Style" data-title="Style / Defendant" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;CaseResultsGrid_%23%3DPartyId%23-sort=Style-asc">Style / Defendant</a></th><th class="k-header" data-configurable-grid="True" data-field="FileDate" data-title="File Date" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;CaseResultsGrid_%23%3DPartyId%23-sort=FileDate-asc">File Date</a></th><th class="k-header" data-configurable-grid="True" data-field="CaseTypeId.Description" data-title="Type" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;CaseResultsGrid_%23%3DPartyId%23-sort=CaseTypeId.Description-asc">Type</a></th><th class="k-header" data-configurable-grid="True" data-field="CaseStatusId.Description" data-title="Status" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;CaseResultsGrid_%23%3DPartyId%23-sort=CaseStatusId.Description-asc">Status</a></th><th class="k-header" data-configurable-grid="True" data-field="LocationName" data-title="Location" scope="col" style="display:none"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;CaseResultsGrid_%23%3DPartyId%23-sort=LocationName-asc">Location</a></th><th class="k-header" data-configurable-grid="True" data-field="DefendantName" data-title="Party Name" scope="col" style="display:none"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;CaseResultsGrid_%23%3DPartyId%23-sort=DefendantName-asc">Party Name</a></th><th class="k-header" data-configurable-grid="True" data-field="PartyTypeKey" data-title="Party Type" scope="col" style="display:none"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;CaseResultsGrid_%23%3DPartyId%23-sort=PartyTypeKey-asc">Party Type</a></th></tr></thead><tbody><tr class="t-no-data"><td colspan="4"></td></tr></tbody></table><div class="k-pager-wrap k-grid-pager"><a class="k-link k-state-disabled" data-page="1" href="\#" title="Go to the first page"><span class="k-icon k-i-seek-w">seek-w</span></a><a class="k-link k-state-disabled" data-page="0" href="\#" title="Go to the previous page"><span class="k-icon k-i-arrow-w">arrow-w</span></a><ul class="k-pager-numbers k-reset"><li><span class="k-state-selected" data-page="1">1</span></li></ul><a class="k-link k-state-disabled" data-page="2" href="\#" title="Go to the next page"><span class="k-icon k-i-arrow-e">arrow-e</span></a><a class="k-link k-state-disabled" data-page="1" href="\#" title="Go to the last page"><span class="k-icon k-i-seek-e">seek-e</span></a><span class="k-pager-sizes k-label"><select><option>10</option><option>25</option><option>50</option><option>200</option></select>items per page</span><span class="k-pager-info k-label">0 - 0 of 0 items</span></div></div><script>
+	jQuery(function(){jQuery("\#CaseResultsGrid_#=PartyId#").kendoGrid({"dataBound":smartSearchGridResultsObj.casesGridDataBound,"columns":[{"title":"Case Number","attributes":{"class":"card-heading party-case-caseid owa-break-all"},"menu":false,"template":"\\# if (CaseId \u003e 0) { \\#\u003ca href=\u0027\u0027 class=\u0027caseLink\u0027 data-caseid=\"\\#=CaseId\\#\" data-url=\u0027\\#=CaseLoadUrl\\#\u0027\u003e\\#=CaseNumber\\#\u003c/a\u003e\\# } else { \\#\\#=CaseNumber\\#\\# } \\#","field":"CaseNumber","encoded":true},{"title":"Style / Defendant","attributes":{"class":"card-subheading party-case-style"},"template":"\\# if (CaseCategoryKey \u0026\u0026 CaseCategoryKey === \u0027CR\u0027 \u0026\u0026 DefendantName ) { \\#\u003cdiv class=\u0027big-search-type\u0027 title=\u0027\\#=DefendantName\\#\u0027\u003e\\#=DefendantName\\#\u003c/div\u003e\\# } else if (Style) { \\#\u003cdiv class=\u0027big-search-type\u0027 title=\u0027\\#=Style\\#\u0027\u003e\\#=Style\\#\u003c/div\u003e\\# } \\#","field":"Style","encoded":true},{"title":"File Date","attributes":{"class":"card-data party-case-filedate","data-label":"File Date"},"template":"\\#= (FileDateText||\u0027\u0027) \\#","field":"FileDate","encoded":true},{"title":"Type","attributes":{"class":"card-data party-case-type","data-label":"Type"},"field":"CaseTypeId.Description","encoded":true},{"title":"Status","attributes":{"class":"card-data party-case-status","data-label":"Status"},"field":"CaseStatusId.Description","encoded":true},{"title":"Location","attributes":{"class":"card-data party-case-location","data-label":"Location"},"hidden":true,"field":"LocationName","encoded":true},{"title":"Party Name","attributes":{"class":"card-data party-case-partyname","data-label":"Party Name"},"hidden":true,"field":"DefendantName","encoded":true},{"title":"Party Type","attributes":{"class":"card-data","data-label":"Party Type"},"hidden":true,"field":"PartyTypeKey","encoded":true}],"pageable":{"autoBind":false,"pageSizes":[10,25,50,200],"buttonCount":10},"sortable":true,"filterable":true,"columnMenu":true,"scrollable":false,"autoBind":false,"dataSource":{"transport":{"prefix":"CaseResultsGrid_#=PartyId#-","read":{"url":""}},"pageSize":10,"page":1,"total":0,"serverPaging":true,"serverSorting":true,"serverFiltering":true,"serverGrouping":true,"serverAggregates":true,"type":"aspnetmvc-server","filter":[],"schema":{"data":"Data","total":"Total","errors":"Errors","model":{"fields":{"NodeID":{"type":"string"},"LocationName":{"type":"string"},"CaseId":{"type":"number","defaultValue":null},"EncryptedCaseId":{"editable":false,"type":"string"},"Charges":{"type":"object"},"CaseLoadUrl":{"type":"string"},"CaseNumber":{"type":"string"},"Style":{"type":"string"},"FileDate":{"type":"date"},"FileDateText":{"type":"string"},"CaseTypeId":{"type":"object"},"CaseStatusId":{"type":"object"},"DefendantName":{"type":"string"},"CaseCategoryKey":{"type":"string"},"DateOfBirth":{"type":"string"},"PartyTypeKey":{"type":"string"},"DoBSortKey":{"editable":false,"type":"date"}}}}},"detailTemplate":kendo.template($('\#KendoChargeAndDispositionTemplate').html())});});
+<\/script>
+    <script>
+      jQuery(function () {
+        kendoCaseGridTemplateInitializer(#=JSON.stringify(data)#);
+      });
+    </script>
+  </div>
+</script>
+
+
+<script id="KendoChargeAndDispositionTemplate" type="text/kendo-tmpl">
+  <div id="disposition-#=CaseId#" class="kendo-charge-and-disposition-template"></div>
+</script>
+
+<!-- /[KendoCaseGridTemplate] -->
+
+<!-- [KendoJudgmentGridTemplate] -->
+
+
+<script>
+  function kendoJudgementGridTemplateInitializer(data) {
+    var PartyResult = $("#Grid").data('kendoGrid').dataItem($("a[data-party-id='" + data.PartyId + "']").closest('tr'));
+    var judgmentResults = PartyResult && PartyResult.JudgmentResults;
+
+    if (judgmentResults) {
+      for (var i = 0, len = judgmentResults.length; i < len; i++) {
+        if (judgmentResults[i].EnteredDate) {
+          judgmentResults[i].EnteredDate = new Date(judgmentResults[i].EnteredDate);
+        }
+        if (judgmentResults[i].DocketedDate) {
+          judgmentResults[i].DocketedDate = new Date(judgmentResults[i].DocketedDate);
+        }
+        if (judgmentResults[i].StatusDate) {
+          judgmentResults[i].StatusDate = new Date(judgmentResults[i].StatusDate);
+        }
+      }
+      var dataSourceResults = new kendo.data.DataSource({
+        data: judgmentResults,
+        pageSize: 10,
+        sort: {
+          field: "DocketedDate",
+          dir: "desc"
+        }
+      });
+      var grid = jQuery("#JudgmentResultsGrid_" + data.PartyId).data('kendoGrid');
+      // Hide the pager if the results are 10 or less.
+      if (judgmentResults.length <= 10) {
+        grid.pager.element.hide();
+      }
+      grid.setDataSource(dataSourceResults);
+      grid.dataSource.read();
+      grid.refresh();
+    }
+  }
+</script>
+
+<script id="JudgmentGridTemplate"
+        type="text/kendo-tmpl">
+  <div id="judgmentContainer_#=PartyId#" class="party-results-container judgments-container">
+    <div class="heading">
+      Judgments
+    </div>
+    <div class="k-widget k-grid can-morph-to-card" id="JudgmentResultsGrid_#=PartyId#"><table cellspacing="0"><colgroup><col /></colgroup><thead class="k-grid-header"><tr><th class="k-header" data-configurable-grid="True" data-field="CaseNumber" data-title="Case Number" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;JudgmentResultsGrid_%23%3DPartyId%23-sort=CaseNumber-asc">Case Number</a></th></tr></thead><tbody><tr class="t-no-data"><td colspan="-12"></td></tr></tbody></table><div class="k-pager-wrap k-grid-pager"><a class="k-link k-state-disabled" data-page="1" href="\#" title="Go to the first page"><span class="k-icon k-i-seek-w">seek-w</span></a><a class="k-link k-state-disabled" data-page="0" href="\#" title="Go to the previous page"><span class="k-icon k-i-arrow-w">arrow-w</span></a><ul class="k-pager-numbers k-reset"><li><span class="k-state-selected" data-page="1">1</span></li></ul><a class="k-link k-state-disabled" data-page="2" href="\#" title="Go to the next page"><span class="k-icon k-i-arrow-e">arrow-e</span></a><a class="k-link k-state-disabled" data-page="1" href="\#" title="Go to the last page"><span class="k-icon k-i-seek-e">seek-e</span></a><span class="k-pager-sizes k-label"><select><option>10</option><option>25</option><option>50</option><option>200</option></select>items per page</span><span class="k-pager-info k-label">0 - 0 of 0 items</span></div></div><script>
+	jQuery(function(){jQuery("\#JudgmentResultsGrid_#=PartyId#").kendoGrid({"dataBound":smartSearchGridResultsObj.judgmentGridDataBound,"columns":[{"title":"Case Number","attributes":{"class":"card-heading party-judgment-casenumber owa-break-all"},"menu":false,"template":"\\# if (CaseId \u003e 0) { \\#\u003ca href=\u0027\u0027 class=\u0027judgmentLink\u0027 data-caseid=\u0027\\#=EncryptedCaseId\\#\u0027 data-eventId=\u0027\\#=EventId\\#\u0027\u003e\\#=CaseNumber\\#\u003c/a\u003e\\# } else { \\#\\#=CaseNumber\\#\\# } \\#","field":"CaseNumber","encoded":true}],"pageable":{"autoBind":false,"pageSizes":[10,25,50,200],"buttonCount":10},"sortable":true,"filterable":true,"columnMenu":{"columns":false},"scrollable":false,"autoBind":false,"dataSource":{"transport":{"prefix":"JudgmentResultsGrid_#=PartyId#-","read":{"url":""}},"pageSize":10,"page":1,"total":0,"serverPaging":true,"serverSorting":true,"serverFiltering":true,"serverGrouping":true,"serverAggregates":true,"type":"aspnetmvc-server","filter":[],"schema":{"data":"Data","total":"Total","errors":"Errors","model":{"fields":{"NodeID":{"type":"string"},"CaseId":{"type":"string"},"EncryptedCaseId":{"editable":false,"type":"string"},"CaseNumber":{"type":"string"},"LocationName":{"type":"string"},"EventId":{"type":"number","defaultValue":null},"JudgmentType":{"type":"string"},"Status":{"type":"string"},"StatusDate":{"type":"string"},"OriginalPrincipal":{"type":"number"},"DocketedDate":{"type":"string"},"EnteredDate":{"type":"string"},"IsSatisfied":{"type":"boolean"},"ExpiresDate":{"type":"string"},"Debtors":{"type":"string"},"Creditors":{"type":"string"},"Comments":{"type":"string"},"Volume":{"type":"string"},"BookPage":{"type":"string"},"CaseTypeId":{"type":"object"},"DocketedDateParsed":{"editable":false,"type":"date"},"DocketedDateText":{"editable":false,"type":"string"},"EnteredDateParsed":{"editable":false,"type":"date"},"EnteredDateText":{"editable":false,"type":"string"},"StatusDateParsed":{"editable":false,"type":"date"},"StatusDateText":{"editable":false,"type":"string"}}}}}});});
+<\/script>
+    <script>
+      jQuery(function () {
+        kendoJudgementGridTemplateInitializer(#=JSON.stringify(data)#);
+      });
+    </script>
+  </div>
+</script>
+
+<!-- /[KendoJudgmentGridTemplate] -->
+
+<!-- [KendoProtectionOrderGridTemplate] -->
+
+
+<script>
+  function kendoProtectionOrderGridTemplateInitializer(data) {
+    var PartyResult = $("#Grid").data('kendoGrid').dataItem($("a[data-party-id='" + data.PartyId + "']").closest('tr'));
+    var protectionOrderResults = PartyResult && PartyResult.ProtectionOrderResults;
+    if (protectionOrderResults) {
+      for (var i = 0, len = protectionOrderResults.length; i < len; i++) {
+        if (protectionOrderResults[i].IssueDate) {
+          protectionOrderResults[i].IssueDate = new Date(protectionOrderResults[i].IssueDate);
+        }
+        if (protectionOrderResults[i].ExpirationDate) {
+          protectionOrderResults[i].ExpirationDate = new Date(protectionOrderResults[i].ExpirationDate);
+        }
+      }
+      var dataSourceResults = new kendo.data.DataSource({
+        data: protectionOrderResults,
+        pageSize: 10,
+        sort: {
+          field: "IssueDate",
+          dir: "desc"
+        }
+      });
+      var grid = jQuery("#ProtectionOrderResultsGrid_" + data.PartyId).data('kendoGrid');
+      // Hide the pager if the results are 10 or less.
+      if (protectionOrderResults.length <= 10) {
+        grid.pager.element.hide();
+      }
+      grid.setDataSource(dataSourceResults);
+      grid.dataSource.read();
+      grid.refresh();
+    }
+  }
+</script>
+
+<script id="ProtectionOrderGridTemplate"
+        type="text/kendo-tmpl">
+  <div id="protectionOrderContainer_#=PartyId#" class="party-results-container protection-orders-container">
+    <div class="heading">
+      Protection Orders
+    </div>
+    <div class="k-widget k-grid can-morph-to-card" id="ProtectionOrderResultsGrid_#=PartyId#"><table cellspacing="0"><colgroup><col /><col /><col /><col /><col /></colgroup><thead class="k-grid-header"><tr><th class="k-header" data-field="ProtectionOrderNumber" data-title="PO Number" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;ProtectionOrderResultsGrid_%23%3DPartyId%23-sort=ProtectionOrderNumber-asc">PO Number</a></th><th class="k-header" data-field="ProtectionOrderTypeId.Description" data-title="Type" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;ProtectionOrderResultsGrid_%23%3DPartyId%23-sort=ProtectionOrderTypeId.Description-asc">Type</a></th><th class="k-header" data-field="ProtectionOrderStatusId.Description" data-title="Status" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;ProtectionOrderResultsGrid_%23%3DPartyId%23-sort=ProtectionOrderStatusId.Description-asc">Status</a></th><th class="k-header" data-field="IssueDate" data-title="Issued Date" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;ProtectionOrderResultsGrid_%23%3DPartyId%23-sort=IssueDate-asc">Issued Date</a></th><th class="k-header" data-field="ExpirationDate" data-title="Expires" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;ProtectionOrderResultsGrid_%23%3DPartyId%23-sort=ExpirationDate-asc">Expires</a></th></tr></thead><tbody><tr class="t-no-data"><td colspan="5"></td></tr></tbody></table><div class="k-pager-wrap k-grid-pager"><a class="k-link k-state-disabled" data-page="1" href="\#" title="Go to the first page"><span class="k-icon k-i-seek-w">seek-w</span></a><a class="k-link k-state-disabled" data-page="0" href="\#" title="Go to the previous page"><span class="k-icon k-i-arrow-w">arrow-w</span></a><ul class="k-pager-numbers k-reset"><li><span class="k-state-selected" data-page="1">1</span></li></ul><a class="k-link k-state-disabled" data-page="2" href="\#" title="Go to the next page"><span class="k-icon k-i-arrow-e">arrow-e</span></a><a class="k-link k-state-disabled" data-page="1" href="\#" title="Go to the last page"><span class="k-icon k-i-seek-e">seek-e</span></a><span class="k-pager-sizes k-label"><select><option>10</option><option>25</option><option>50</option><option>200</option></select>items per page</span><span class="k-pager-info k-label">0 - 0 of 0 items</span></div></div><script>
+	jQuery(function(){jQuery("\#ProtectionOrderResultsGrid_#=PartyId#").kendoGrid({"dataBound":smartSearchGridResultsObj.protectionOrderGridDataBound,"columns":[{"title":"PO Number","attributes":{"class":"card-heading party-judgment-ponumber owa-break-all"},"template":"\\# if (ProtectionOrderId \u003e 0) { \\#\u003ca href=\u0027\u0027 class=\u0027protectionOrderLink\u0027 data-protectionOrderId=\u0027\\#=EncryptedProtectionOrderId\\#\u0027 \u003e\\#=ProtectionOrderNumber\\#\u003c/a\u003e\\# } else { \\#\\#=ProtectionOrderNumber\\#\\# } \\#","field":"ProtectionOrderNumber","encoded":true},{"title":"Type","attributes":{"class":"card-data party-warrant-type","data-label":"Type"},"field":"ProtectionOrderTypeId.Description","encoded":true},{"title":"Status","attributes":{"class":"card-data party-warrant-status","data-label":"Status"},"field":"ProtectionOrderStatusId.Description","encoded":true},{"title":"Issued Date","attributes":{"class":"card-data party-warrant-issueddate","data-label":"Issued Date"},"template":"\\#if( IssueDate ){\\#\\# var parsedIssueDate = new Date(Date.parse(IssueDate)); \\#\\#= kendo.toString(parsedIssueDate, \u0027d\u0027) \\#\\# } \\#","field":"IssueDate","encoded":true},{"title":"Expires","attributes":{"class":"card-data party-warrant-expires","data-label":"Expires"},"template":"\\#if( ExpirationDate ){\\#\\# var parsedExpirationDate = new Date(Date.parse(ExpirationDate)); \\#\\#= kendo.toString(parsedExpirationDate, \u0027d\u0027) \\#\\# } \\#","field":"ExpirationDate","encoded":true}],"pageable":{"autoBind":false,"pageSizes":[10,25,50,200],"buttonCount":10},"sortable":true,"filterable":true,"columnMenu":true,"scrollable":false,"autoBind":false,"dataSource":{"transport":{"prefix":"ProtectionOrderResultsGrid_#=PartyId#-","read":{"url":""}},"pageSize":10,"page":1,"total":0,"serverPaging":true,"serverSorting":true,"serverFiltering":true,"serverGrouping":true,"serverAggregates":true,"type":"aspnetmvc-server","filter":[],"schema":{"data":"Data","total":"Total","errors":"Errors","model":{"fields":{"NodeID":{"type":"string"},"ProtectionOrderId":{"type":"number","defaultValue":null},"EncryptedProtectionOrderId":{"editable":false,"type":"string"},"ProtectionOrderNumber":{"type":"string"},"ProtectionOrderStatusId":{"type":"object"},"ProtectionOrderTypeId":{"type":"object"},"ExpirationDate":{"type":"string"},"IssueDate":{"type":"string"},"ExpirationDateParsed":{"editable":false,"type":"date"},"ExpirationDateText":{"editable":false,"type":"string"},"IssueDateParsed":{"editable":false,"type":"date"},"IssueDateText":{"editable":false,"type":"string"},"CaseId":{"type":"number","defaultValue":null},"CaseNumber":{"type":"string"}}}}}});});
+<\/script>
+    <script>
+      jQuery(function () {
+        kendoProtectionOrderGridTemplateInitializer(#=JSON.stringify(data)#);
+      });
+    </script>
+  </div>
+</script>
+
+<!-- /[KendoProtectionOrderGridTemplate] -->
+
+<!-- [KendoWarrantGridTemplate] -->
+
+
+<script>
+  function kendoWarrantGridTemplateInitializer(data) {
+    var PartyResult = $("#Grid").data('kendoGrid').dataItem($("a[data-party-id='" + data.PartyId + "']").closest('tr'));
+    var warrantResults = PartyResult && PartyResult.WarrantResults;
+    if (warrantResults) {
+      for (var i = 0, len = warrantResults.length; i < len; i++) {
+        if (warrantResults[i].IssueDate) {
+          warrantResults[i].IssueDate = new Date(warrantResults[i].IssueDate);
+        }
+      }
+      var dataSourceResults = new kendo.data.DataSource({
+        data: warrantResults,
+        pageSize: 10,
+        sort: {
+          field: "IssueDate",
+          dir: "desc"
+        }
+      });
+      var grid = jQuery("#WarrantResultsGrid_" + data.PartyId).data('kendoGrid');
+      // Hide the pager if the results are 10 or less.
+      if (warrantResults.length <= 10) {
+        grid.pager.element.hide()
+      }
+      grid.setDataSource(dataSourceResults);
+      grid.dataSource.read();
+      grid.refresh();
+    }
+  }
+</script>
+
+<script id="WarrantGridTemplate"
+        type="text/kendo-tmpl">
+  <div id="warrantContainer_#=PartyId#" class="party-results-container warrants-container">
+    <div class="heading">
+      Warrants
+    </div>
+
+    <div class="k-widget k-grid can-morph-to-card" id="WarrantResultsGrid_#=PartyId#"><table cellspacing="0"><colgroup><col /></colgroup><thead class="k-grid-header"><tr><th class="k-header" data-configurable-grid="True" data-field="WarrantNumber" data-title="Warrant Number" scope="col"><a class="k-link" href="/Portal/SmartSearch/SmartSearchResults?_=1589237622185&amp;WarrantResultsGrid_%23%3DPartyId%23-sort=WarrantNumber-asc">Warrant Number</a></th></tr></thead><tbody><tr class="t-no-data"><td colspan="-2"></td></tr></tbody></table><div class="k-pager-wrap k-grid-pager"><a class="k-link k-state-disabled" data-page="1" href="\#" title="Go to the first page"><span class="k-icon k-i-seek-w">seek-w</span></a><a class="k-link k-state-disabled" data-page="0" href="\#" title="Go to the previous page"><span class="k-icon k-i-arrow-w">arrow-w</span></a><ul class="k-pager-numbers k-reset"><li><span class="k-state-selected" data-page="1">1</span></li></ul><a class="k-link k-state-disabled" data-page="2" href="\#" title="Go to the next page"><span class="k-icon k-i-arrow-e">arrow-e</span></a><a class="k-link k-state-disabled" data-page="1" href="\#" title="Go to the last page"><span class="k-icon k-i-seek-e">seek-e</span></a><span class="k-pager-sizes k-label"><select><option>10</option><option>25</option><option>50</option><option>200</option></select>items per page</span><span class="k-pager-info k-label">0 - 0 of 0 items</span></div></div><script>
+	jQuery(function(){jQuery("\#WarrantResultsGrid_#=PartyId#").kendoGrid({"dataBound":smartSearchGridResultsObj.warrantGridDataBound,"columns":[{"title":"Warrant Number","attributes":{"class":"card-heading party-warrant-number owa-break-all"},"menu":false,"template":"\u003ca class=\u0027warrantDataLink\u0027 data-warrant-id=\u0027\\#=EncryptedWarrantId\\#\u0027\u003e\\#=WarrantNumber\\#\u003c/a\u003e","field":"WarrantNumber","encoded":true}],"pageable":{"autoBind":false,"pageSizes":[10,25,50,200],"buttonCount":10},"sortable":true,"filterable":true,"columnMenu":{"columns":false},"scrollable":false,"autoBind":false,"dataSource":{"transport":{"prefix":"WarrantResultsGrid_#=PartyId#-","read":{"url":""}},"pageSize":10,"page":1,"total":0,"serverPaging":true,"serverSorting":true,"serverFiltering":true,"serverGrouping":true,"serverAggregates":true,"type":"aspnetmvc-server","filter":[],"schema":{"data":"Data","total":"Total","errors":"Errors","model":{"fields":{"NodeID":{"type":"string"},"WarrantId":{"type":"number","defaultValue":null},"EncryptedWarrantId":{"editable":false,"type":"string"},"WarrantNumber":{"type":"string"},"WarrantStatusId":{"type":"object"},"IssueDate":{"type":"string"},"IssueDateParsed":{"editable":false,"type":"date"},"IssuedDateText":{"editable":false,"type":"string"},"WarrantLocationId":{"type":"object"}}}}}});});
+<\/script>
+    <script>
+      jQuery(function () {
+        kendoWarrantGridTemplateInitializer(#=JSON.stringify(data)#);
+      });
+    </script>
+  </div>
+</script>
+
+<!-- /[KendoWarrantGridTemplate] -->
+
+
+<script id="PartyCardTemplateSearchCriteria" type="application/json">
+  null
+</script>
+
+<script id="PartyCardTemplate"
+        type="text/kendo-tmpl">
+
+    <!-- [KendoPartyCardTemplate_Nested] -->
+
+
+
+
+<div class="party-card"
+     data-party-id="#=EncryptedPartyId#"  
+     data-search-types="case"     
+     id="grid_#=PartyId#">
+  <div class="party-card-columns">
+
+    
+    #=odyPortal.kendoUtils.generatePartyCard(data)#
+
+    <div class="party-card-column">
+
+      
+
+              <div class="party-card-row"
+             data-count="#=data.CaseResultCount#"
+             data-ctype="case">
+          Cases
+        </div>
+                </div>
+  </div>
+  <div class="kendo-party-card-grid-container"
+       id="gridContainer_#=EncryptedPartyId#">
+  </div>
+</div>
+
+<!-- /[KendoPartyCardTemplate_Nested] -->
+
+
+</script>
+
+<!-- /[KendoPartyCardTemplate] -->
+
+
+    </div>
+  </div>
+</div>
+
+<!-- /[PartyResult] -->
